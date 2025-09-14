@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
+{
+    /**
+     * Tampilkan form login
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Proses login
+     */
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $loginField = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $loginField => $request->username,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials, $request->filled('remember-me'))) {
+            $request->session()->regenerate();
+
+            // arahkan sesuai role
+            switch (Auth::user()->role) {
+                case 'admin':
+                    return redirect()->route('admin.dashboard');
+                case 'guru':
+                    return redirect()->route('guru.dashboard');
+                case 'siswa':
+                    return redirect()->route('siswa.dashboard');
+                case 'wali_murid':
+                    return redirect()->route('wali.dashboard');
+                default:
+                    return redirect()->route('home');
+            }
+        }
+
+        return back()->withErrors([
+            'username' => 'Login gagal! Periksa kembali username/email dan password.',
+        ])->onlyInput('username');
+    }
+
+    /**
+     * Proses logout
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'You have been logged out successfully.');
+    }
+}

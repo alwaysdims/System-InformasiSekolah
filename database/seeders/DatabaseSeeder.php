@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             KelasSeeder::class,
             SiswaSeeder::class,
             SiswaKelasSeeder::class,
+            WaliMuridSeeder::class,
+            WaliMuridSiswaSeeder::class,
         ]);
     }
 }

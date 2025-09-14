@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('mapel', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_mapel', 20)->unique();
             $table->string('nama_mapel', 100);
         });
     }
