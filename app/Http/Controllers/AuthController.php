@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// use App\Models\User;
+use App\Models\Guru_mapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,20 +37,44 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember-me'))) {
             $request->session()->regenerate();
 
-            // arahkan sesuai role
-            switch (Auth::user()->role) {
+            $user = Auth::user();
+
+            switch ($user->role) {
                 case 'admin':
                     return redirect()->route('admin.dashboard');
-                case 'guru':
-                    return redirect()->route('guru.dashboard');
+
                 case 'siswa':
                     return redirect()->route('siswa.dashboard');
+
                 case 'wali_murid':
                     return redirect()->route('wali.dashboard');
+
+                case 'guru':
+                    // Ambil data jabatan guru
+                    $guru = $user->guru; // relasi one-to-one ke tabel guru
+
+                    if ($guru) {
+                        switch ($guru->jabatan) {
+                            case 'kepala_sekolah':
+                                return redirect()->route('kepala.dashboard');
+                            case 'waka_kurikulum':
+                                return redirect()->route('waka.kurikulum.dashboard');
+                            case 'waka_kesiswaan':
+                                return redirect()->route('waka.kesiswaan.dashboard');
+                            case 'bk':
+                                return redirect()->route('bk.dashboard');
+                            default:
+                                return redirect()->route('guru.dashboard'); // guru mapel biasa
+                        }
+                    }
+
+                    return redirect()->route('guru.dashboard');
+
                 default:
                     return redirect()->route('home');
             }
         }
+
 
         return back()->withErrors([
             'username' => 'Login gagal! Periksa kembali username/email dan password.',
@@ -64,6 +90,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }
 }

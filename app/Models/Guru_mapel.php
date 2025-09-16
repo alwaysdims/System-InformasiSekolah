@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Auth extends Model
+class Guru_mapel extends Model
 {
     use HasFactory;
-    protected $table = 'users';
+    protected $table = 'guru_mapel';
+    
 }
