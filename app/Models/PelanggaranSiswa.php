@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class PelanggaranSiswa extends Model
+{
+    protected $table = 'pelanggaran_siswa';
+    protected $fillable = ['siswa_id', 'jenis_pelanggaran', 'keterangan', 'tanggal', 'ditangani_oleh'];
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class);
+    }
+
+    public function ditanganiOleh()
+    {
+        return $this->belongsTo(User::class, 'ditangani_oleh');
+    }
+}
