@@ -25,10 +25,6 @@ Route::get('/admin/dataGuru/edit/{id}', [AdminController::class, 'editGuru'])->n
 Route::put('/admin/dataGuru/update/{id}', [AdminController::class, 'updateGuru'])->name('admin.dataGuru.update');
 Route::resource('dataGuru', AdminController::class);
 
-
-Route::get('/guru/dashboard', fn() => 'Guru Dashboard')->name('guru.dashboard');
-Route::get('/siswa/dashboard', fn() => 'Siswa Dashboard')->name('siswa.dashboard');
-Route::get('/wali/dashboard', fn() => 'Wali Murid Dashboard')->name('wali.dashboard');
 // =============================
 // Redirect sesuai role utama
 // =============================
