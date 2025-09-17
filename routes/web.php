@@ -32,7 +32,6 @@ Route::get('/wali/dashboard', fn() => 'Wali Murid Dashboard')->name('wali.dashbo
 // =============================
 // Redirect sesuai role utama
 // =============================
-Route::get('/admin/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
 Route::get('/siswa/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
 Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashboard');
 
