@@ -10,7 +10,7 @@ class WaliMuridSeeder extends Seeder
     public function run(): void
     {
         DB::table('wali_murid')->insert([
-            'user_id' => 4, // user dengan role wali_murid
+            'user_id' => 4,
             'nama' => 'Bapak Budi',
             'no_hp' => '081298765432',
             'alamat' => 'Jl. Mawar No.10',
