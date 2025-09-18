@@ -16,7 +16,7 @@ class AdminController extends Controller
             'content' => 'admin.dashboard.index',
             'title' => 'Dashboard'
         ];
-        return view('layout.admin.wrapper', $data);
+        return view('admin.layout.wrapper', $data);
     }
 
     public function dataGuru() {
@@ -25,7 +25,7 @@ class AdminController extends Controller
             'title' => 'Data Guru',
             'guru' => Guru::select('id', 'nama', 'jenis_ptk', 'jabatan')->get()
         ];
-        return view('layout.admin.wrapper', $data);
+        return view('admin.layout.wrapper', $data);
     }
 
     public function addGuru() {
@@ -33,7 +33,7 @@ class AdminController extends Controller
             'content' => 'admin.dataGuru.add',
             'title' => 'Data Guru',
         ];
-        return view('layout.admin.wrapper', $data);
+        return view('admin.layout.wrapper', $data);
     }
 
     public function storeGuru(Request $request) {
@@ -80,7 +80,7 @@ class AdminController extends Controller
             'title' => 'Data Guru',
             'guru' => Guru::where('id', decrypt($id))->get()
         ];
-        return view('layout.admin.wrapper', $data);
+        return view('admin.layout.wrapper', $data);
     }
 
     public function editGuru($id) {
@@ -89,7 +89,7 @@ class AdminController extends Controller
             'title' => 'Data Guru',
             'guru' => Guru::find(decrypt($id))
         ];
-        return view('layout.admin.wrapper', $data);
+        return view('admin.layout.wrapper', $data);
     }
 
     public function updateGuru(Request $request, $id) {
