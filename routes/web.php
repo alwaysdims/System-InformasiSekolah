@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
+use App\Http\Controllers\Admin\DataKelasController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -44,9 +45,13 @@ Route::resource('dataGuru', AdminController::class);
 Route::prefix('admin')->group(function () {
     Route::resource('dataAdmin', DataAdminController::class)->names('admin.dataAdmin');
 
-    Route::resource('admin/wali', DataWaliController::class)
+    Route::resource('wali', DataWaliController::class)
         ->names('admin.wali_murid')
         ->parameters(['wali-murid' => 'id']);
+
+    Route::resource('dataKelas', DataKelasController::class)
+            ->names('admin.dataKelas')
+            ->parameters(['dataKelas' => 'kelas']);
 });
 
 // =============================
