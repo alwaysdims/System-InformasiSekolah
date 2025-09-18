@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
 use App\Http\Controllers\Admin\DataJurusanController;
-use App\Http\Controllers\AuthController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DataKelasController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -17,11 +19,18 @@ Route::get('/dashboard', function () {
 
 // Contoh redirect sesuai role
 
+// =============================
+// route wali murid
+// =============================
+
+
 
 
 // =============================
 // route admin
 // =============================
+
+
 
 // route admin data guru
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -36,13 +45,20 @@ Route::resource('dataGuru', AdminController::class);
 // route data admin
 Route::prefix('admin')->group(function () {
     Route::resource('dataAdmin', DataAdminController::class)->names('admin.dataAdmin');
+
+    Route::resource('wali', DataWaliController::class)
+        ->names('admin.wali_murid')
+        ->parameters(['wali-murid' => 'id']);
+
+    Route::resource('dataKelas', DataKelasController::class)
+            ->names('admin.dataKelas')
+            ->parameters(['dataKelas' => 'kelas']);
+
+    Route::resource('dataJurusan', DataJurusanController::class)
+            ->names('admin.dataJurusan')
+            ->parameters(['dataJurusan' => 'jurusan']);
 });
 
-// Admin routes, assuming authentication and authorization middleware
-Route::prefix('admin')->group(function () {
-    // Resource route for jurusan management
-    Route::resource('dataJurusan', DataJurusanController::class)->names('admin.dataJurusan');
-});
 // =============================
 // end route admin
 // =============================
