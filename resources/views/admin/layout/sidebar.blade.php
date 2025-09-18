@@ -15,7 +15,7 @@
         <a href="/admin/dataGuru" class="sidebar-item @if($title == 'Data Guru') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-chalkboard-teacher"></i> Data Guru
         </a>
-        <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
+        <a href="{{ '/admin/dataSiswa' }}" class="sidebar-item @if($title == 'Data Siswa') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-user-graduate"></i> Data Siswa
         </a>
         <a href="{{ route('admin.wali_murid.index') }}" class="sidebar-item @if($title == 'Daftar Wali Murid') active @endif flex items-center gap-3 text-sm font-medium">
