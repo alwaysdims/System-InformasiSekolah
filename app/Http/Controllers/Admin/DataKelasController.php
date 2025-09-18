@@ -22,7 +22,7 @@ class DataKelasController extends Controller
 
         $data = [
             'content' => 'admin.dataKelas.index',
-            'title' => 'Data Admin',
+            'title' => 'Data Kelas',
             'kelas' => $kelas,
             'jurusan' => $jurusan,
             'guru' => $guru,

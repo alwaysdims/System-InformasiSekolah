@@ -82,6 +82,10 @@ class DataJurusanController extends Controller
     {
         $jurusan = Jurusan::findOrFail($id);
         $jurusan->delete();
-        return redirect()->route('admin.dataJurusan.index')->with('success', 'Jurusan berhasil dihapus!');
+
+        return redirect()
+            ->route('admin.dataJurusan.index')
+            ->with('success', 'Jurusan berhasil dihapus!');
     }
+
 }

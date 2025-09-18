@@ -18,7 +18,7 @@
         <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-user-graduate"></i> Data Siswa
         </a>
-        <a href="{{ route('admin.wali_murid.index') }}" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
+        <a href="{{ route('admin.wali_murid.index') }}" class="sidebar-item @if($title == 'Daftar Wali Murid') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-users"></i> Data Wali Murid
         </a>
         <a href="{{ '/admin/dataAdmin' }}" class="sidebar-item @if($title == 'Data Admin') active @endif flex items-center gap-3 text-sm font-medium">
@@ -27,10 +27,10 @@
         <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-book-open"></i> Mata Pelajaran
         </a>
-        <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
-            <i class="fas fa-tools"></i> Kejuruan
+        <a href="{{ route('admin.dataJurusan.index') }}" class="sidebar-item @if($title == 'Data Jurusan') active @endif flex items-center gap-3 text-sm font-medium">
+            <i class="fas fa-tools"></i> Data Jurusan
         </a>
-        <a href="{{ route('admin.dataKelas.index') }}" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
+        <a href="{{ route('admin.dataKelas.index') }}" class="sidebar-item @if($title == 'Data Kelas') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-school"></i> Kelas
         </a>
     </nav>

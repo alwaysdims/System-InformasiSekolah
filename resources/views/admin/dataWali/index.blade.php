@@ -30,7 +30,7 @@
 
             <!-- Modal Tambah Wali Murid -->
             <div id="addModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                <div class="bg-white rounded-lg w-full max-w-md mx-4 p-6 relative">
+                <div class="bg-white rounded-lg w-full max-w-md mx-4 p-6 relative  max-h-[90vh] overflow-y-auto">
                     <h2 class="text-lg font-bold mb-4 text-gray-700">Tambah Wali Murid</h2>
                     <form id="addWaliMuridForm" action="{{ route('admin.wali_murid.store') }}" method="POST" class="space-y-4">
                         @csrf
