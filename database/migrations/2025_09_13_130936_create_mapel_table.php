@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_mapel', 20)->unique();
             $table->string('nama_mapel', 100);
+            $table->timestamps();
         });
     }
 

@@ -21,7 +21,7 @@
         <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-users"></i> Data Wali Murid
         </a>
-        <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">
+        <a href="{{ '/admin/dataAdmin' }}" class="sidebar-item @if($title == 'Data Admin') active @endif flex items-center gap-3 text-sm font-medium">
             <i class="fas fa-user-shield"></i> Data Admin
         </a>
         <a href="forum_diskusi.html" class="sidebar-item @if($title == 'Forum Diskusi') active @endif flex items-center gap-3 text-sm font-medium">

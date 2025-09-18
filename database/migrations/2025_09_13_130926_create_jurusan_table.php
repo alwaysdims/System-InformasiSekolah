@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_jurusan', 20)->unique();
             $table->string('nama_jurusan', 150);
+            $table->timestamps();
         });
     }
 

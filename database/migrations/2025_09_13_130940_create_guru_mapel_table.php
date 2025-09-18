@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('mapel_id')->constrained('mapel')->onDelete('cascade');
             $table->foreignId('jurusan_id')->nullable()->constrained('jurusan')->onDelete('cascade');
             $table->unique(['guru_id', 'mapel_id', 'jurusan_id']);
+            $table->timestamps();
         });
     }
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('tingkat', ['X','XI','XII']);
             $table->foreignId('jurusan_id')->nullable()->constrained('jurusan')->onDelete('set null');
             $table->foreignId('wali_kelas_id')->nullable()->constrained('guru')->onDelete('set null');
+            $table->timestamps();
         });
     }
 

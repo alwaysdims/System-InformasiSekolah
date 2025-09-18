@@ -16,6 +16,6 @@ class JadwalPelajaran extends Model
 
     public function guruMapel()
     {
-        return $this->belongsTo(GuruMapel::class);
+        return $this->belongsTo(Guru_Mapel::class);
     }
 }

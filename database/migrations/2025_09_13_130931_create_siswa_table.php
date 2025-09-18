@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('alamat')->nullable();
             $table->string('no_hp', 20)->nullable();
             $table->foreignId('jurusan_id')->nullable()->constrained('jurusan')->onDelete('set null');
+            $table->timestamps();
         });
     }
 
