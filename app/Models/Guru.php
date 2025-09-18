@@ -10,7 +10,11 @@ class Guru extends Model
     public $timestamps = false;
     protected $table = 'guru';
     protected $guarded = [];
-    protected $fillable = ['user_id', 'nama', 'nip', 'alamat', 'no_hp'];
+    protected $fillable = [
+        'user_id', 'nip', 'nama', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir',
+        'jenjang', 'jurusan_kuliah', 'jenis_ptk', 'status_kepeg', 'jabatan',
+        'alamat', 'no_hp'
+    ];
 
     public function user()
     {

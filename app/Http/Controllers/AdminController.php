@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -35,21 +36,41 @@ class AdminController extends Controller
     }
 
     public function storeGuru(Request $request) {
+        // Validasi untuk user (akun login)
         $dataUser = $request->validate([
             'username' => 'required|string|unique:users,username',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
         ]);
+
+        // Simpan ke tabel users
+        $dataUser['password'] = Hash::make($dataUser['password']);
         $dataUser['role'] = 'guru';
         $user = User::create($dataUser);
 
-        $dataGuru = $request->except(['username', 'email', 'password', '_token']);
-        $dataGuru['user_id'] = $user->id;
-        $dataGuru['dibuat_pada'] = now();
+        // Validasi untuk tabel guru
+        $dataGuru = $request->validate([
+            'nip'            => 'nullable|string|max:30|unique:guru,nip',
+            'nama'           => 'required|string|max:100',
+            'jenis_kelamin'  => 'required|in:Laki-laki,Perempuan',
+            'tempat_lahir'   => 'nullable|string|max:100',
+            'tanggal_lahir'  => 'nullable|date',
+            'jenjang'        => 'required|in:D3,S1,S2,S3',
+            'jurusan_kuliah' => 'nullable|string|max:150',
+            'jenis_ptk'      => 'required|in:Guru,Tenaga Pendidikan',
+            'status_kepeg'   => 'required|in:PNS,PPPK,Honorer Sekolah,Honorer Daerah',
+            'jabatan'        => 'nullable|in:Kepala Sekolah,Waka Kurikulum,Waka Kesiswaan,Guru Mapel,BK',
+            'alamat'         => 'nullable|string',
+            'no_hp'          => 'nullable|string|max:20',
+        ]);
 
+        // Tambahkan user_id
+        $dataGuru['user_id'] = $user->id;
+
+        // created_at/dibuat_pada otomatis oleh DB, jadi tidak perlu diisi
         Guru::create($dataGuru);
 
-        return redirect('/admin/dataGuru');
+        return redirect('/admin/dataGuru')->with('success', 'Data guru berhasil ditambahkan');
     }
 
     public function detailsGuru($id) {
