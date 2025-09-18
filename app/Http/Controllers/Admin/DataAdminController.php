@@ -69,6 +69,7 @@ class DataAdminController extends Controller
     }
 
 
+
     public function show($id)
     {
         $admin = Admin::with('user')->findOrFail($id);
@@ -124,18 +125,18 @@ class DataAdminController extends Controller
     }
 
     public function destroy($id)
-    {
-        $admin = Admin::with('user')->findOrFail($id);
+{
+    $admin = Admin::with('user')->findOrFail($id);
 
-        // Hapus user terkait
-        if ($admin->user) {
-            $admin->user->delete();
-        }
-
-        // Hapus admin
-        $admin->delete();
-
-        return redirect()->route('admin.dataAdmin.index')->with('success', 'Admin berhasil dihapus!');
+    // Hapus user terkait
+    if ($admin->user) {
+        $admin->user->delete();
     }
+
+    // Hapus admin
+    $admin->delete();
+
+    return redirect()->route('admin.dataAdmin.index')->with('success', 'Admin berhasil dihapus!');
+}
 
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DataAdminController;
+use App\Http\Controllers\Admin\DataJurusanController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,12 @@ Route::resource('dataGuru', AdminController::class);
 // route data admin
 Route::prefix('admin')->group(function () {
     Route::resource('dataAdmin', DataAdminController::class)->names('admin.dataAdmin');
+});
+
+// Admin routes, assuming authentication and authorization middleware
+Route::prefix('admin')->group(function () {
+    // Resource route for jurusan management
+    Route::resource('dataJurusan', DataJurusanController::class)->names('admin.dataJurusan');
 });
 // =============================
 // end route admin

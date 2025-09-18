@@ -4,39 +4,84 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Jurusan;
+use Illuminate\Support\Facades\Validator;
 
 class DataJurusanController extends Controller
 {
-    // resource controller for managing 'jurusan' data
-
     public function index()
     {
-        // Logic to display a list of jurusan
+        $jurusans = Jurusan::all();
+        $data = [
+            'content' => 'admin.dataJurusan.index',
+            'title' => 'Data Jurusan',
+            'jurusans' => $jurusans
+        ];
+        return view('admin.layout.wrapper', $data);
     }
+
     public function create()
     {
-        // Logic to show form for creating a new jurusan
+        // Redirect to index with a flag to open the add modal
+        return redirect()->route('admin.dataJurusan.index')->with('openAddModal', true);
     }
+
     public function store(Request $request)
     {
-        // Logic to store a new jurusan
+        $validator = Validator::make($request->all(), [
+            'kode_jurusan' => 'required|string|max:20|unique:jurusan',
+            'nama_jurusan' => 'required|string|max:150',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.dataJurusan.index')->withErrors($validator)->withInput()->with('openAddModal', true);
+        }
+
+        Jurusan::create([
+            'kode_jurusan' => $request->kode_jurusan,
+            'nama_jurusan' => $request->nama_jurusan,
+        ]);
+
+        return redirect()->route('admin.dataJurusan.index')->with('success', 'Jurusan berhasil ditambahkan!');
     }
+
     public function show($id)
     {
-        // Logic to display a specific jurusan
+        // Redirect to index with a flag to open the detail modal
+        return redirect()->route('admin.dataJurusan.index')->with('openDetailModal', $id);
     }
+
     public function edit($id)
     {
-
-        // Logic to show form for editing a specific jurusan
+        // Redirect to index with a flag to open the edit modal
+        return redirect()->route('admin.dataJurusan.index')->with('openEditModal', $id);
     }
+
     public function update(Request $request, $id)
     {
-        // Logic to update a specific jurusan
-    }
-    public function destroy($id)
-    {
-        // Logic to delete a specific jurusan
+        $jurusan = Jurusan::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'kode_jurusan' => 'required|string|max:20|unique:jurusan,kode_jurusan,' . $id,
+            'nama_jurusan' => 'required|string|max:150',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.dataJurusan.index')->withErrors($validator)->withInput()->with('openEditModal', $id);
+        }
+
+        $jurusan->update([
+            'kode_jurusan' => $request->kode_jurusan,
+            'nama_jurusan' => $request->nama_jurusan,
+        ]);
+
+        return redirect()->route('admin.dataJurusan.index')->with('success', 'Jurusan berhasil diperbarui!');
     }
 
+    public function destroy($id)
+    {
+        $jurusan = Jurusan::findOrFail($id);
+        $jurusan->delete();
+        return redirect()->route('admin.dataJurusan.index')->with('success', 'Jurusan berhasil dihapus!');
+    }
 }
