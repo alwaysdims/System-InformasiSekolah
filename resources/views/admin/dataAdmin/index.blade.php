@@ -234,81 +234,77 @@
                                         </svg>
                                     </button>
                                 </form>
-
                                 <div id="detailModal"
-                                    class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300 hidden">
-                                    <div
-                                        class="bg-white rounded-xl w-full max-w-2xl mx-4 p-8 relative shadow-2xl transform transition-all duration-300 scale-95 opacity-0">
-                                        <div
-                                            class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
-                                            <h2 class="text-3xl font-bold text-gray-800">Detail Admin 👨‍🏫</h2>
-                                            <button onclick="closeDetailModal()"
-                                                class="text-gray-500 hover:text-red-500 transition-colors duration-200">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="2" stroke="currentColor" class="w-8 h-8">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                                class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300 hidden">
+                                <div
+                                    class="bg-white rounded-xl w-full max-w-2xl mx-4 p-8 relative shadow-2xl transform transition-all duration-300 scale-95 opacity-0">
+                                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+                                        <h2 class="text-3xl font-bold text-gray-800">Detail Admin 👨‍🏫</h2>
+                                        <button onclick="closeDetailModal()"
+                                            class="text-gray-500 hover:text-red-500 transition-colors duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor" class="w-8 h-8">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
 
-                                        <div
-                                            class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-lg text-gray-700">
-                                            <div class="space-y-4">
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Nama</span>
-                                                    <span id="detail_nama" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Jenis Kelamin</span>
-                                                    <span id="detail_jenis_kelamin" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Tempat Lahir</span>
-                                                    <span id="detail_tempat_lahir" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Tanggal Lahir</span>
-                                                    <span id="detail_tanggal_lahir" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Email</span>
-                                                    <span id="detail_email" class="mt-1 text-gray-700"></span>
-                                                </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-lg text-gray-700">
+                                        <div class="space-y-4">
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Nama</span>
+                                                <span id="detail_nama" class="mt-1 text-gray-700"></span>
                                             </div>
-
-                                            <div class="space-y-4 mt-4 md:mt-0">
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Username</span>
-                                                    <span id="detail_username" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">No HP</span>
-                                                    <span id="detail_no_hp" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Jabatan</span>
-                                                    <span id="detail_jabatan" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Status Kepegawaian</span>
-                                                    <span id="detail_status" class="mt-1 text-gray-700"></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-semibold text-gray-900">Alamat</span>
-                                                    <span id="detail_alamat" class="mt-1 text-gray-700"></span>
-                                                </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Jenis Kelamin</span>
+                                                <span id="detail_jenis_kelamin" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Tempat Lahir</span>
+                                                <span id="detail_tempat_lahir" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Tanggal Lahir</span>
+                                                <span id="detail_tanggal_lahir" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Email</span>
+                                                <span id="detail_email" class="mt-1 text-gray-700"></span>
                                             </div>
                                         </div>
 
-                                        <div class="flex justify-end pt-8">
-                                            <button type="button" onclick="closeDetailModal()"
-                                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
-                                                Tutup
-                                            </button>
+                                        <div class="space-y-4 mt-4 md:mt-0">
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Username</span>
+                                                <span id="detail_username" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">No HP</span>
+                                                <span id="detail_no_hp" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Jabatan</span>
+                                                <span id="detail_jabatan" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Status Kepegawaian</span>
+                                                <span id="detail_status" class="mt-1 text-gray-700"></span>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-gray-900">Alamat</span>
+                                                <span id="detail_alamat" class="mt-1 text-gray-700"></span>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <div class="flex justify-end pt-8">
+                                        <button type="button" onclick="closeDetailModal()"
+                                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105">
+                                            Tutup
+                                        </button>
+                                    </div>
                                 </div>
+                            </div>
                             </td>
 
                         </tr>
@@ -350,62 +346,17 @@
         success ') }}');
     @endif
 
-    ffunction openDetailModal(data) {
-    const modal = document.getElementById('detailModal');
-    const modalContent = modal.querySelector('div:last-child');
+    function openDetailModal(id, nama, username, email, no_hp) {
+        document.getElementById('detail_nama').textContent = nama;
+        document.getElementById('detail_username').textContent = username;
+        document.getElementById('detail_email').textContent = email;
+        document.getElementById('detail_no_hp').textContent = no_hp;
 
-    // Update the content with data
-    document.getElementById('detail_nama').textContent = data.nama;
-    document.getElementById('detail_jenis_kelamin').textContent = data.jenis_kelamin;
-    document.getElementById('detail_tempat_lahir').textContent = data.tempat_lahir;
-    document.getElementById('detail_tanggal_lahir').textContent = data.tanggal_lahir;
-    document.getElementById('detail_email').textContent = data.email;
-    document.getElementById('detail_username').textContent = data.username;
-    document.getElementById('detail_no_hp').textContent = data.no_hp;
-    document.getElementById('detail_jabatan').textContent = data.jabatan;
-    document.getElementById('detail_status').textContent = data.status_kepegawaian;
-    document.getElementById('detail_alamat').textContent = data.alamat;
-
-    // Show the modal with a smooth fade-in and scale-up effect
-    modal.classList.remove('hidden');
-        setTimeout(() => {
-            modal.classList.remove('opacity-0');
-            modalContent.classList.remove('scale-95', 'opacity-0');
-            modalContent.classList.add('scale-100', 'opacity-100');
-        }, 10); // A small delay to ensure the transition is triggered
+        document.getElementById('detailModal').classList.remove('hidden');
     }
 
     function closeDetailModal() {
-        const modal = document.getElementById('detailModal');
-        const modalContent = modal.querySelector('div:last-child');
-
-        // Start the fade-out and scale-down animation
-        modal.classList.add('opacity-0');
-        modalContent.classList.remove('scale-100', 'opacity-100');
-        modalContent.classList.add('scale-95', 'opacity-0');
-
-        // Hide the modal completely after the animation finishes
-        modal.addEventListener('transitionend', () => {
-            modal.classList.add('hidden');
-        }, {
-            once: true
-        });
+        document.getElementById('detailModal').classList.add('hidden');
     }
-
-// Contoh penggunaan:
-// Panggil fungsi ini saat tombol detail diklik, lalu berikan data yang relevan
-/* openDetailModal({
-        nama: 'Bapak Guru',
-        jenis_kelamin: 'Laki-laki',
-        tempat_lahir: 'Jakarta',
-        tanggal_lahir: '1980-01-01',
-        email: 'guru@example.com',
-        username: 'bapak.guru',
-        no_hp: '081298765432',
-        jabatan: 'Guru Mapel',
-        status_kepegawaian: 'PNS',
-        alamat: 'Jl. Pendidikan No.1'
-    });
-*/
 
 </script>
