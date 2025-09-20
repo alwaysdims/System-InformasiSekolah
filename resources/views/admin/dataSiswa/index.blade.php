@@ -231,7 +231,7 @@
     </div>
 </div>
 
-@section('scripts')
+{{-- @section('scripts') --}}
 <script>
 function openAddModal() {
     document.getElementById('addModal').classList.remove('hidden');
@@ -289,4 +289,4 @@ function closeDetailModal() {
     modal.addEventListener('transitionend', () => modal.classList.add('hidden'), { once: true });
 }
 </script>
-@endsection
+{{-- @endsection --}}
