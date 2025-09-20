@@ -6,8 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
 use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
-use App\Http\Controllers\Admin\DataJurusanController;
 use App\Http\Controllers\Admin\DataKelasController;
+use App\Http\Controllers\Admin\DataMapelController;
+use App\Http\Controllers\Admin\DataSiswaController;
+use App\Http\Controllers\Admin\DataJurusanController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -48,6 +50,7 @@ Route::resource('dataGuru', DataGuruController::class);
 Route::prefix('admin')->group(function () {
     Route::resource('dataAdmin', DataAdminController::class)->names('admin.dataAdmin');
 
+
     Route::resource('wali', DataWaliController::class)
         ->names('admin.wali_murid')
         ->parameters(['wali-murid' => 'id']);
@@ -59,6 +62,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('dataJurusan', DataJurusanController::class)
             ->names('admin.dataJurusan')
             ->parameters(['dataJurusan' => 'jurusan']);
+
+    Route::resource('dataSiswa', DataSiswaController::class)->names('admin.dataSiswa');
+
+
+    Route::resource('dataMapel', DataMapelController::class)->names('admin.dataMapel');
+
 });
 
 // =============================
