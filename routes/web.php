@@ -12,25 +12,9 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-
-
-// Contoh redirect sesuai role
-
-// =============================
-// route wali murid
-// =============================
-
-
-
-
 // =============================
 // route admin
 // =============================
-
-
 
 // route admin data guru
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -68,6 +52,27 @@ Route::prefix('admin')->group(function () {
 // =============================
 Route::get('/siswa/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
 Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashboard');
+
+// =============================
+// route Guru & Jabatan Khusus dashboard
+// =============================
+
+Route::prefix('guru')->group(function () {
+    Route::get('/kurikulum/dashboard', [App\Http\Controllers\Guru\Kurikulum\DashboardController::class, 'index'])->name('guru.kurikulum.dashboard');
+    Route::get('/kesiswaan/dashboard', [App\Http\Controllers\Guru\Kesiswaan\DashboardController::class, 'index'])->name('guru.kesiswaan.dashboard');
+    Route::get('/mapel/dashboard', [App\Http\Controllers\Guru\GuruMapel\DashboardController::class, 'index'])->name('guru.mapel.dashboard');
+    Route::get('/kepala/dashboard', [App\Http\Controllers\Guru\KepalaSekolah\DashboardController::class, 'index'])->name('guru.kepala.dashboard');
+    Route::get('/bk/dashboard', [App\Http\Controllers\Guru\Bk\DashboardController::class, 'index'])->name('guru.bk.dashboard');
+});
+
+Route::prefix('guru')->group(function () {
+
+});
+
+// =============================
+// route kurikulum end
+// =============================
+
 
 // =============================
 // Guru & Jabatan Khusus
