@@ -1,20 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Landing;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
-use App\Http\Controllers\Admin\DataJurusanController;
 use App\Http\Controllers\Admin\DataKelasController;
+use App\Http\Controllers\Admin\DataJurusanController;
 
-Route::get('/', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/landing', [Landing::class, 'index']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
 
 
 // Contoh redirect sesuai role
@@ -81,5 +80,15 @@ Route::get('/bk/dashboard', fn() => view('guru.bk.dashboard'))->name('bk.dashboa
 // =============================
 // Auth Proses
 // =============================
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// =============================
+// LandingPage
+// =============================
+Route::get('/landing', fn() => view('landing.landing'))->name('landing');
+Route::get('/profil', fn() => view('landing.profil'))->name('profil');
+Route::get('/sejarah', fn() => view('landing.sejarah'))->name('sejarah');
+Route::get('/sambutan', fn() => view('landing.sambutan'))->name('sambutan');
+Route::get('/ekstrakulikuler', fn() => view('landing.ekstrakulikuler'))->name('ekstrakulikuler');
