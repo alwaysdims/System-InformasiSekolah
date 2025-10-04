@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class DataGuruController extends Controller
 {
     public function index() {
         $data = [
@@ -51,16 +51,16 @@ class AdminController extends Controller
 
         // Validasi untuk tabel guru
         $dataGuru = $request->validate([
-            'nip'            => 'nullable|string|max:30|unique:guru,nip',
+            'nip'            => 'required|string|max:30|unique:guru,nip',
             'nama'           => 'required|string|max:100',
             'jenis_kelamin'  => 'required|in:Laki-laki,Perempuan',
             'tempat_lahir'   => 'nullable|string|max:100',
             'tanggal_lahir'  => 'nullable|date',
-            'jenjang'        => 'required|in:D3,S1,S2,S3',
+            'jenjang'        => 'nullable|in:D3,S1,S2,S3',
             'jurusan_kuliah' => 'nullable|string|max:150',
             'jenis_ptk'      => 'required|in:Guru,Tenaga Pendidikan',
             'status_kepeg'   => 'required|in:PNS,PPPK,Honorer Sekolah,Honorer Daerah',
-            'jabatan'        => 'nullable|in:Kepala Sekolah,Waka Kurikulum,Waka Kesiswaan,Guru Mapel,BK',
+            'jabatan'        => 'required|in:Kepala Sekolah,Waka Kurikulum,Waka Kesiswaan,Guru Mapel,BK',
             'alamat'         => 'nullable|string',
             'no_hp'          => 'nullable|string|max:20',
         ]);
