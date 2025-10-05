@@ -59,7 +59,7 @@ class AuthController extends Controller
                                 return redirect()->route('kepala.dashboard');
                             case 'waka_kurikulum':
                                 return redirect()->route('waka.kurikulum.dashboard');
-                            case 'waka_kesiswaan':
+                            case 'Waka Kesiswaan':
                                 return redirect()->route('waka.kesiswaan.dashboard');
                             case 'bk':
                                 return redirect()->route('bk.dashboard');
@@ -90,7 +90,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        
+
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
     }
 }
