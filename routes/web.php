@@ -8,10 +8,10 @@ use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
-Use App\Http\Controllers\Guru\Kurikulum\KelenderPendidikanController;
+use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
+use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
-use App\Http\Controllers\Guru\Kesiswaan\KalenderPendidikanController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -69,8 +69,13 @@ Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashbo
 // route Guru & Jabatan Khusus dashboard
 // =============================
 
-Route::prefix('guru/kurikulum')->group(function () {
+Route::prefix('waka-kurikulum')->group(function () {
+    Route::get('/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
+
     Route::resource('kalenderPendidikan', KalenderPendidikanController::class)->names('kurikulum.kalenderPendidikan');
+    Route::resource('pembagianTugasGuru', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasGuru');
+    Route::resource('pembagianTugas', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasSiswa');
+    
 });
 
 
@@ -78,14 +83,12 @@ Route::prefix('guru/kurikulum')->group(function () {
 // route kurikulum end
 // =============================
 
-
 // =============================
 // Guru & Jabatan Khusus
 // =============================
 Route::get('/guru/dashboard', fn() => view('guru.gurumapel.dashboard'))->name('guru.dashboard');
 Route::get('/kepala/dashboard', fn() => view('guru.KepalaSekolah.dashboard'))->name('kepala.dashboard');
-
-Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
+// Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
 Route::get('/waka-kesiswaan/dashboard', fn() => view('guru.kesiswaan.dashboard'))->name('waka.kesiswaan.dashboard');
 Route::get('/bk/dashboard', fn() => view('guru.bk.dashboard'))->name('bk.dashboard');
 
