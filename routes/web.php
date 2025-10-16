@@ -2,18 +2,21 @@
 
 use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Landing;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
 use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
+use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
+use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
 
 Route::get('/', function () {
-    return view('auth.login');
-})->name('login');
+    return view('landing.landing');
+})->name('landing');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -33,8 +36,6 @@ Route::get('/dashboard', function () {
 // route admin
 // =============================
 
-
-
 // route admin data guru
 Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
@@ -49,7 +50,6 @@ Route::resource('dataGuru', DataGuruController::class);
 // route data admin
 Route::prefix('admin')->group(function () {
     Route::resource('dataAdmin', DataAdminController::class)->names('admin.dataAdmin');
-
 
     Route::resource('wali', DataWaliController::class)
         ->names('admin.wali_murid')
@@ -74,6 +74,12 @@ Route::prefix('admin')->group(function () {
 // end route admin
 // =============================
 
+
+Route::get('/profil', [Landing::class, 'profil'])->name('profil');
+Route::get('/sejarah', [Landing::class, 'sejarah'])->name('sejarah');
+Route::get('/ekstrakulikuler', [Landing::class, 'ekstrakulikuler'])->name('ekstrakulikuler');
+Route::get('/sambutan', [Landing::class, 'sambutan'])->name('sambutan');
+
 // =============================
 // Redirect sesuai role utama
 // =============================
@@ -81,16 +87,35 @@ Route::get('/siswa/dashboard', fn() => view('siswa.dashboard'))->name('siswa.das
 Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashboard');
 
 // =============================
+// route Guru & Jabatan Khusus dashboard
+// =============================
+
+Route::prefix('waka-kurikulum')->group(function () {
+    Route::get('/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
+
+    Route::resource('kalenderPendidikan', KalenderPendidikanController::class)->names('kurikulum.kalenderPendidikan');
+    Route::resource('pembagianTugasGuru', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasGuru');
+    Route::resource('pembagianTugas', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasSiswa');
+    
+});
+
+
+// =============================
+// route kurikulum end
+// =============================
+
+// =============================
 // Guru & Jabatan Khusus
 // =============================
 Route::get('/guru/dashboard', fn() => view('guru.gurumapel.dashboard'))->name('guru.dashboard');
 Route::get('/kepala/dashboard', fn() => view('guru.KepalaSekolah.dashboard'))->name('kepala.dashboard');
-Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
+// Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
 Route::get('/waka-kesiswaan/dashboard', fn() => view('guru.kesiswaan.dashboard'))->name('waka.kesiswaan.dashboard');
 Route::get('/bk/dashboard', fn() => view('guru.bk.dashboard'))->name('bk.dashboard');
 
 // =============================
 // Auth Proses
 // =============================
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
