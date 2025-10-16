@@ -34,4 +34,9 @@ class Guru extends Model
     {
         return $this->hasMany(KalenderPendidikan::class, 'dibuat_oleh');
     }
+
+    public function guruMapels()
+{
+    return $this->hasMany(Guru_Mapel::class, 'guru_id');
+}
 }

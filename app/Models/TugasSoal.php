@@ -17,4 +17,11 @@ class TugasSoal extends Model
     {
         return $this->belongsTo(Tugas::class);
     }
+
+    public function opsi()
+    {
+        return $this->hasMany(TugasJawaban::class);
+    }
+
+    
 }

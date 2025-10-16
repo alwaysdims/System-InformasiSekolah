@@ -1,3 +1,4 @@
+
 <script>
     const toggleBtn = document.getElementById('toggleSidebar');
     const sidebar = document.getElementById('sidebar');
@@ -58,20 +59,6 @@
         ) {
             sidebar.classList.add("-translate-x-full");
             overlay.classList.add("hidden");
-        }
-    });
-
-    function toggleDropdown() {
-        const dropdown = document.getElementById("dropdown-menu");
-        dropdown.classList.toggle("hidden");
-    }
-
-    // Optional: biar klik di luar dropdown otomatis menutup
-    window.addEventListener("click", function (e) {
-        const dropdown = document.getElementById("dropdown-menu");
-        const button = document.querySelector("button[onclick='toggleDropdown()']");
-        if (!dropdown.contains(e.target) && !button.contains(e.target)) {
-            dropdown.classList.add("hidden");
         }
     });
 </script>

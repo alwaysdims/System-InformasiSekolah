@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Guru;
+use App\Models\Admin;
+use App\Models\Siswa;
+use App\Models\WaliMurid;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -41,6 +45,18 @@ class User extends Authenticatable
     {
         return $this->hasOne(WaliMurid::class);
     }
+    public function guruMapel()
+    {
+        return $this->hasOneThrough(
+            Guru_Mapel::class,
+            Guru::class,
+            'user_id', // Foreign key on Guru table
+            'guru_id', // Foreign key on GuruMapel table
+            'id', // Local key on User table
+            'id' // Local key on Guru table
+        );
+    }
+
 
     public function kalenderPendidikan()
     {

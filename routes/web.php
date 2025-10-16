@@ -109,7 +109,27 @@ Route::prefix('waka-kurikulum')->group(function () {
 // =============================
 // Guru & Jabatan Khusus
 // =============================
-Route::get('/guru/dashboard', fn() => view('guru.gurumapel.dashboard'))->name('guru.dashboard');
+
+Route::prefix('guru')->group(function () {
+    Route::get('/dashboard', fn() => view('guru.gurumapel.dashboard'))->name('guru.dashboard');
+    // Add more routes as needed
+    Route::resource('materi', \App\Http\Controllers\Guru\GuruMapel\MateriPelajaranController::class)->names('guru.materi');
+    Route::post('materi/{materi}/publish', [\App\Http\Controllers\Guru\GuruMapel\MateriPelajaranController::class, 'publish'])->name('guru.materi.publish');
+
+    Route::resource('tugas', \App\Http\Controllers\Guru\GuruMapel\TugasController::class)->names('guru.tugas');
+    Route::post('tugas/{tugas}/publish', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'publish'])->name('guru.tugas.publish');
+    Route::get('tugas/{tugas}/hasil', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'hasil'])->name('guru.tugas.hasil');
+
+    Route::get('detail-soal/{id}', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'index'])->name('guru.detail.tugas');
+    Route::get('detail-soal/{id}/esay', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'esay'])->name('guru.esay.tugas');
+    Route::get('detail-soal/{id}/pilga', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'pilga'])->name('guru.pilga.tugas');
+
+    // Di dalam Route::prefix('guru')->group(function () {
+    Route::post('detail-soal/{tugas}/pilga', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'storePilga'])->name('guru.pilga.store');
+    Route::post('detail-soal/{tugas}/esay', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'storeEsay'])->name('guru.esay.store');
+    Route::delete('soal/{soal}', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'destroy'])->name('guru.soal.destroy');
+});
+
 Route::get('/kepala/dashboard', fn() => view('guru.KepalaSekolah.dashboard'))->name('kepala.dashboard');
 // Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
 Route::get('/waka-kesiswaan/dashboard', fn() => view('guru.kesiswaan.dashboard'))->name('waka.kesiswaan.dashboard');
