@@ -13,7 +13,6 @@ class JadwalPelajaran extends Model
     {
         return $this->belongsTo(Kelas::class);
     }
-
     public function guruMapel()
     {
         return $this->belongsTo(Guru_Mapel::class);

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
@@ -8,10 +7,12 @@ use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
-use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
-use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
+use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
+use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
+use App\Http\Controllers\Guru\Kurikulum\PembagianJadwalPerkelasController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -74,8 +75,9 @@ Route::prefix('waka-kurikulum')->group(function () {
 
     Route::resource('kalenderPendidikan', KalenderPendidikanController::class)->names('kurikulum.kalenderPendidikan');
     Route::resource('pembagianTugasGuru', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasGuru');
-    Route::resource('pembagianTugas', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasSiswa');
-    
+    Route::resource('jadwalKelas', PembagianJadwalPerkelasController::class)
+    ->names('kurikulum.jadwalKelas')
+    ->parameters(['jadwalKelas' => 'jadwalPelajaran']);
 });
 
 

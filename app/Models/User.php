@@ -42,6 +42,10 @@ class User extends Authenticatable
         return $this->hasOne(WaliMurid::class);
     }
 
+    public function kalenderPendidikan()
+    {
+        return $this->hasMany(KalenderPendidikan::class, 'dibuat_oleh');
+    }
     // public function setPasswordAttribute($value)
     // {
     //     $this->attributes['password'] = bcrypt($value);

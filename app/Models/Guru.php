@@ -29,4 +29,9 @@ class Guru extends Model
     {
         return $this->belongsToMany(Kelas::class, 'wali_kelas');
     }
+
+    public function kalenderPendidikan()
+    {
+        return $this->hasMany(KalenderPendidikan::class, 'dibuat_oleh');
+    }
 }
