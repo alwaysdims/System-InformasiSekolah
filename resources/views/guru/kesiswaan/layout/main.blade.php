@@ -848,7 +848,6 @@
         lazyLoadMessages();
 
         console.log('Forum Diskusi initialized successfully');
-
     </script>
 </body>
 

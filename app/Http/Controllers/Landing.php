@@ -36,4 +36,9 @@ class Landing extends Controller
     {
         return view('landing.ekstrakulikuler');
     }
+    public function sambutan()
+    {
+        return view('landing.sambutan');
+    }
+    
 }

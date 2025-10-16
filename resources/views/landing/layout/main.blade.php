@@ -201,13 +201,13 @@
                         <ul id="artikelDropdown"
                             class="hidden absolute top-full left-0 mt-2 bg-white shadow-lg rounded-md w-56 text-sm text-gray-600 font-normal z-50">
                             <li>
-                                <a href="{{ route('artikel') }}"
+                                <a href="#artikel"
                                     class="block px-6 py-3 hover:text-white hover:bg-blue-600 transition rounded-md font-semibold">
                                     Artikel Sejarah
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('bkk') }}"
+                            <li> 
+                                <a href="#bkk"
                                     class="block px-6 py-3 hover:text-white hover:bg-blue-600 transition rounded-md font-semibold">
                                     Bursa Kerja Khusus
                                 </a>
