@@ -84,7 +84,20 @@ Route::get('/sambutan', [Landing::class, 'sambutan'])->name('sambutan');
 // =============================
 // Redirect sesuai role utama
 // =============================
-Route::get('/siswa/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
+
+Route::prefix('siswa')->group(function () {
+    Route::get('/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
+
+    Route::resource('/tugas', \App\Http\Controllers\Siswa\TugasController::class)->names('siswa.tugas');
+
+    Route::get('tugas/{tugas}/detail', [\App\Http\Controllers\Siswa\TugasController::class, 'detail'])->name('siswa.tugas.detail');
+    Route::get('tugas/{tugas}/kerjakan', [\App\Http\Controllers\Siswa\TugasController::class, 'kerjakan'])->name('siswa.tugas.kerjakan');
+    Route::post('tugas/{tugas}/submit', [\App\Http\Controllers\Siswa\TugasController::class, 'submit'])->name('siswa.tugas.submit');
+
+    // New routes for answering multiple-choice and essay questions
+    Route::get('tugas/{tugas}/pilga', [\App\Http\Controllers\Siswa\TugasController::class, 'pilga'])->name('siswa.pilga.tugas');
+    Route::get('tugas/{tugas}/esay', [\App\Http\Controllers\Siswa\TugasController::class, 'esay'])->name('siswa.esay.tugas');
+});
 Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashboard');
 
 // =============================

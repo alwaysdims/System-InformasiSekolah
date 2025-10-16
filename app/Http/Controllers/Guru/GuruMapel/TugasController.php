@@ -37,7 +37,7 @@ class TugasController extends Controller
             'judul' => 'required|string|max:255',
             'guru_mapel_id' => 'required|exists:guru_mapel,id',
             'tipe' => 'required',
-            'deadline' => 'required|integer|min:1|max:180',
+            'deadline' => 'required',
             'bobot_pg' => 'required|integer|min:0|max:100',
             'bobot_esai' => 'required|integer|min:0|max:100',
         ]);

@@ -15,10 +15,10 @@ class Siswa extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class);
-    }
+    // public function kelas()
+    // {
+    //     return $this->belongsTo(Kelas::class);
+    // }
 
     public function jurusan()
     {
@@ -29,4 +29,21 @@ class Siswa extends Model
     {
         return $this->belongsToMany(WaliMurid::class, 'wali_murid_siswa');
     }
+    public function siswaKelas()
+    {
+        return $this->hasMany(SiswaKelas::class);
+    }
+
+    // public function kelas()
+    // {
+    //     return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id');
+    // }
+
+    public function kelas()
+    {
+        return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id')
+                    ->withPivot('tahun_ajaran');
+    }
+
+
 }

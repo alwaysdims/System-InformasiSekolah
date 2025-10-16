@@ -32,7 +32,7 @@ transform -translate-x-full sm:translate-x-0 transition-transform duration-300 e
         </a>
 
         <!-- 3. Tugas/Ujian -->
-        <a href="{{ route('guru.tugas.index') }}" class="flex items-center gap-2 hover:bg-blue-700 hover:text-white p-3 rounded-lg transition">
+        <a href="{{ route('siswa.tugas.index') }}" class="flex items-center gap-2 hover:bg-blue-700 hover:text-white p-3 rounded-lg transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>

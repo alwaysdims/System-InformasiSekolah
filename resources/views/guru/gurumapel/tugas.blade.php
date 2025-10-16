@@ -148,14 +148,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-1 text-sm font-medium">Waktu</label>
-                        <select id="addDurasi" name="deadline" class="w-full border rounded-lg px-3 py-2" required>
-                            <option value="30">30 Menit</option>
-                            <option value="45">45 Menit</option>
-                            <option value="60">60 Menit</option>
-                            <option value="90">90 Menit</option>
-                            <option value="120">120 Menit</option>
-                        </select>
+                        <label class="block mb-1 text-sm font-medium">Tenggat</label>
+                        <input type="datetime-local" id="addBobotPg" name="deadline" min="0" max="100" class="border rounded-lg px-3 py-2 w-full" required>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -203,14 +197,9 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block mb-1 text-sm font-medium">Waktu</label>
-                        <select id="editDurasi" name="deadline" class="w-full border rounded-lg px-3 py-2" required>
-                            <option value="30">30 Menit</option>
-                            <option value="45">45 Menit</option>
-                            <option value="60">60 Menit</option>
-                            <option value="90">90 Menit</option>
-                            <option value="120">120 Menit</option>
-                        </select>
+                        <label class="block mb-1 text-sm font-medium">Tenggat</label>
+                        <input type="datetime-local" id="addBobotPg" name="deadline" min="0" max="100" class="border rounded-lg px-3 py-2 w-full" required>
+                    
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>

@@ -26,10 +26,10 @@ class Tugas extends Model
         return $this->belongsTo(Guru_Mapel::class);
     }
 
-    public function kelas()
-    {
-        return $this->belongsToMany(Kelas::class, 'tugas_kelas');
-    }
+    // public function kelas()
+    // {
+    //     return $this->belongsToMany(Kelas::class, 'tugas_kelas');
+    // }
 
     public function soal()
     {
@@ -38,8 +38,14 @@ class Tugas extends Model
 
     public function jawaban()
     {
-        return $this->hasMany(TugasJawaban::class);
+        return $this->hasMany(TugasJawaban::class, 'tugas_id', 'id');
     }
+
+    public function kelas()
+{
+    return $this->belongsToMany(Kelas::class, 'tugas_kelas', 'tugas_id', 'kelas_id');
+}
+
 
     public function isPublished()
     {
