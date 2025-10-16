@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Landing;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
 use App\Http\Controllers\Admin\DataWaliController;
@@ -15,8 +16,22 @@ use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Guru\Kurikulum\PembagianJadwalPerkelasController;
 
 Route::get('/', function () {
-    return view('auth.login');
-})->name('login');
+    return view('landing.landing');
+})->name('landing');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+
+// Contoh redirect sesuai role
+
+// =============================
+// route wali murid
+// =============================
+
+
+
 
 // =============================
 // route admin
@@ -60,6 +75,12 @@ Route::prefix('admin')->group(function () {
 // end route admin
 // =============================
 
+
+Route::get('/profil', [Landing::class, 'profil'])->name('profil');
+Route::get('/sejarah', [Landing::class, 'sejarah'])->name('sejarah');
+Route::get('/ekstrakulikuler', [Landing::class, 'ekstrakulikuler'])->name('ekstrakulikuler');
+Route::get('/sambutan', [Landing::class, 'sambutan'])->name('sambutan');
+
 // =============================
 // Redirect sesuai role utama
 // =============================
@@ -97,5 +118,6 @@ Route::get('/bk/dashboard', fn() => view('guru.bk.dashboard'))->name('bk.dashboa
 // =============================
 // Auth Proses
 // =============================
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
