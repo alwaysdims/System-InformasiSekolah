@@ -53,7 +53,6 @@
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-700" onclick="return confirm('Yakin hapus admin ini?')">Hapus</button>
                                 </form>
-<<<<<<< HEAD
                                 <div id="detailModal"
                                 class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300 hidden">
                                 <div
@@ -226,7 +225,6 @@ function openDetailModal(data) {
             document.getElementById('detail_' + key).textContent = data[key];
         }
     }
-<<<<<<< HEAD
 
     function closeAddModal() {
         document.getElementById('addModal').classList.add('hidden');
@@ -265,7 +263,6 @@ function openDetailModal(data) {
         document.getElementById('detailModal').classList.add('hidden');
     }
 
-=======
     const modal = document.getElementById('detailModal');
     const modalContent = modal.querySelector('div:first-child');
     modal.classList.remove('hidden');
@@ -281,6 +278,5 @@ function closeDetailModal() {
     modalContent.classList.add('scale-95', 'opacity-0');
     modal.addEventListener('transitionend', () => modal.classList.add('hidden'), { once: true });
 }
->>>>>>> 1e22eb0 (Siswa)
 </script>
 @endsection
