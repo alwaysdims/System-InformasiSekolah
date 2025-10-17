@@ -178,8 +178,10 @@
                         <hr class="border-gray-200" />
 
                         <a href="edit-profil.html" class="block px-4 py-2 hover:bg-blue-50 text-center">Edit Profil</a>
-                        <a href="/laporan-masyarakat/index.html"
-                            class="block px-4 py-2 hover:bg-blue-50 text-center text-red-500">Logout</a>
+                        <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="block px-4 py-2 w-full text-left hover:bg-red-50 text-red-500">Logout</button>
+                    </form>
                     </div>
                 </div>
             </div>

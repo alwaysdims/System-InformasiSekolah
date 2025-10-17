@@ -59,5 +59,13 @@ class Siswa extends Model
                     ->withPivot('tahun_ajaran');
     }
 
+    public function pelanggaran()
+    {
+        return $this->hasMany(PelanggaranSiswa::class, 'siswa_id');
+    }
 
+    public function pengumuman()
+    {
+        return $this->hasMany(Pengumuman::class, 'dibuat_oleh', 'id');
+    }
 }

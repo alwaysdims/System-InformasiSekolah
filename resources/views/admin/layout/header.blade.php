@@ -31,7 +31,10 @@
                     <hr>
                     <a href="profile.html" class="block px-4 py-2 hover:bg-blue-50 text-gray-600">Profil</a>
                     <a href="pengaturan_akun.html" class="block px-4 py-2 hover:bg-blue-50 text-gray-600">Pengaturan</a>
-                    <a href="logout.html" class="block px-4 py-2 hover:bg-red-50 text-red-500">Logout</a>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="block px-4 py-2 w-full text-left hover:bg-red-50 text-red-500">Logout</button>
+                    </form>
                 </div>
             </div>
         </div>

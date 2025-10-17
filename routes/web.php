@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Landing;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
 use App\Http\Controllers\Admin\DataWaliController;
@@ -10,13 +10,15 @@ use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
-use App\Http\Controllers\WaliMurid\AgendaWaliController;
-use App\Http\Controllers\WaliMurid\DashboardWaliMuridController;
-use App\Http\Controllers\WaliMurid\KehadiranWaliController;
 use App\Http\Controllers\WaliMurid\NilaiWaliController;
-use App\Http\Controllers\WaliMurid\PelanggaranWaliController;
-use App\Http\Controllers\WaliMurid\PrestasiWaliController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Guru\KepalaSekolah\DashboardController;
+use App\Http\Controllers\WaliMurid\AgendaWaliController;
+use App\Http\Controllers\WaliMurid\PrestasiWaliController;
+use App\Http\Controllers\WaliMurid\KehadiranWaliController;
+use App\Http\Controllers\WaliMurid\PelanggaranWaliController;
+use App\Http\Controllers\Guru\KepalaSekolah\LaporanController;
+use App\Http\Controllers\WaliMurid\DashboardWaliMuridController;
 use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
 use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Guru\Kurikulum\PembagianJadwalPerkelasController;
@@ -160,7 +162,12 @@ Route::prefix('guru')->group(function () {
     Route::delete('soal/{soal}', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'destroy'])->name('guru.soal.destroy');
 });
 
-Route::get('/kepala/dashboard', fn() => view('guru.KepalaSekolah.dashboard'))->name('kepala.dashboard');
+Route::get('/kepala/dashboard', [DashboardController::class, 'index'])->name('kepala.dashboard');
+Route::get('/kepala/laporan/siswa', [LaporanController::class, 'showLaporanSiswa'])->name('kepala.laporan_siswa');
+Route::get('/kepala/laporan/guru', [LaporanController::class, 'showLaporanGuru'])->name('kepala.laporan_guru');
+Route::get('/kepala/laporan/siswa/cetak', [LaporanController::class, 'cetakLaporanSiswa'])->name('kepala.cetak_laporan_siswa');
+Route::get('/kepala/laporan/guru/cetak', [LaporanController::class, 'cetakLaporanGuru'])->name('kepala.cetak_laporan_guru');
+
 // Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
 Route::get('/waka-kesiswaan/dashboard', fn() => view('guru.kesiswaan.dashboard'))->name('waka.kesiswaan.dashboard');
 Route::get('/bk/dashboard', fn() => view('guru.bk.dashboard'))->name('bk.dashboard');
