@@ -9,6 +9,10 @@ class PengaduanChat extends Model
     protected $table = 'pengaduan_chat';
     protected $fillable = ['pengaduan_id', 'user_id', 'pesan'];
 
+    public $timestamps = false; 
+
+    protected $dates = ['dibuat_pada'];
+
     public function pengaduan()
     {
         return $this->belongsTo(Pengaduan::class);
