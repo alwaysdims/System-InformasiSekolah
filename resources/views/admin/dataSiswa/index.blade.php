@@ -79,8 +79,8 @@
                 <label class="block text-sm font-medium text-gray-700">User</label>
                 <select name="user_id" class="w-full border rounded-lg px-3 py-2" required>
                     <option value="">-- Pilih User --</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @foreach($siswa as $user)
+                        <option value="{{ $user->id }}">{{ $user->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -97,7 +97,7 @@
                 <select name="kelas_id" class="w-full border rounded-lg px-3 py-2">
                     <option value="">-- Pilih Kelas --</option>
                     @foreach($kelas as $k)
-                        <option value="{{ $k->id }}">{{ $k->nama }}</option>
+                        <option value="{{ $k->id }}">{{ $k->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>
@@ -106,7 +106,7 @@
                 <select name="jurusan_id" class="w-full border rounded-lg px-3 py-2">
                     <option value="">-- Pilih Jurusan --</option>
                     @foreach($jurusan as $j)
-                        <option value="{{ $j->id }}">{{ $j->nama }}</option>
+                        <option value="{{ $j->id }}">{{ $j->nama_jurusan }}</option>
                     @endforeach
                 </select>
             </div>
@@ -289,4 +289,4 @@ function closeDetailModal() {
     modal.addEventListener('transitionend', () => modal.classList.add('hidden'), { once: true });
 }
 </script>
-{{-- @endsection --}}
+

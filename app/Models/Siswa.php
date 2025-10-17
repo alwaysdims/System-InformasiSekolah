@@ -15,10 +15,10 @@ class Siswa extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function kelas()
-    {
-        return $this->belongsTo(Kelas::class);
-    }
+    // public function kelas()
+    // {
+    //     return $this->belongsTo(Kelas::class);
+    // }
 
     public function jurusan()
     {
@@ -37,4 +37,27 @@ class Siswa extends Model
     public function kehadiran() {
         return $this->hasMany(KehadiranSiswa::class, 'siswa_id', 'id');
     }
+    
+    public function siswaKelas()
+    {
+        return $this->hasMany(SiswaKelas::class);
+    }
+
+    // public function kelas()
+    // {
+    //     return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id');
+    // }
+
+    public function tugasJawaban()
+    {
+        return $this->hasMany(TugasJawaban::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id')
+                    ->withPivot('tahun_ajaran');
+    }
+
+
 }

@@ -17,4 +17,25 @@ class TugasSoal extends Model
     {
         return $this->belongsTo(Tugas::class);
     }
+
+    // public function opsi()
+    // {
+    //     return $this->hasMany(TugasJawaban::class);
+    // }
+
+
+    // public function tugas()
+    // {
+    //     return $this->belongsTo(Tugas::class);
+    // }
+
+    public function jawaban()
+    {
+        return $this->hasMany(TugasJawaban::class, 'soal_id', 'id');
+    }
+
+    protected $casts = [
+        'pilihan' => 'array', // If pilihan is stored as JSON
+    ];
+
 }

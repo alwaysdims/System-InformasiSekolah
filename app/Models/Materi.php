@@ -9,6 +9,8 @@ class Materi extends Model
     protected $table = 'materi';
     protected $fillable = ['guru_mapel_id', 'judul', 'deskripsi', 'file_path'];
 
+    public $timestamps = false;
+
     public function guruMapel()
     {
         return $this->belongsTo(Guru_Mapel::class);

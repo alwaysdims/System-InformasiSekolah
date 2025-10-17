@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Landing;
 use App\Http\Controllers\AuthController;
@@ -9,8 +8,6 @@ use App\Http\Controllers\Admin\DataWaliController;
 use App\Http\Controllers\Admin\DataAdminController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
-use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
-use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
 use App\Http\Controllers\WaliMurid\AgendaWaliController;
@@ -19,6 +16,10 @@ use App\Http\Controllers\WaliMurid\KehadiranWaliController;
 use App\Http\Controllers\WaliMurid\NilaiWaliController;
 use App\Http\Controllers\WaliMurid\PelanggaranWaliController;
 use App\Http\Controllers\WaliMurid\PrestasiWaliController;
+use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
+use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
+use App\Http\Controllers\Guru\Kurikulum\PembagianJadwalPerkelasController;
 
 Route::get('/', function () {
     return view('landing.landing');
@@ -89,7 +90,6 @@ Route::get('/sambutan', [Landing::class, 'sambutan'])->name('sambutan');
 // =============================
 // Redirect sesuai role utama
 // =============================
-Route::get('/siswa/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
 
 //Wali murid
 Route::prefix('wali')->group(function () {
@@ -102,6 +102,20 @@ Route::prefix('wali')->group(function () {
     Route::get('/kehadiran', [KehadiranWaliController::class, 'index']);
 });
 
+Route::prefix('siswa')->group(function () {
+    Route::get('/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
+
+    Route::resource('/tugas', \App\Http\Controllers\Siswa\TugasController::class)->names('siswa.tugas');
+
+    Route::get('tugas/{tugas}/detail', [\App\Http\Controllers\Siswa\TugasController::class, 'detail'])->name('siswa.tugas.detail');
+    Route::get('tugas/{tugas}/kerjakan', [\App\Http\Controllers\Siswa\TugasController::class, 'kerjakan'])->name('siswa.tugas.kerjakan');
+    Route::post('tugas/{tugas}/submit', [\App\Http\Controllers\Siswa\TugasController::class, 'submit'])->name('siswa.tugas.submit');
+
+    // New routes for answering multiple-choice and essay questions
+    Route::get('tugas/{tugas}/pilga', [\App\Http\Controllers\Siswa\TugasController::class, 'pilga'])->name('siswa.pilga.tugas');
+    Route::get('tugas/{tugas}/esay', [\App\Http\Controllers\Siswa\TugasController::class, 'esay'])->name('siswa.esay.tugas');
+});
+
 // =============================
 // route Guru & Jabatan Khusus dashboard
 // =============================
@@ -111,8 +125,9 @@ Route::prefix('waka-kurikulum')->group(function () {
 
     Route::resource('kalenderPendidikan', KalenderPendidikanController::class)->names('kurikulum.kalenderPendidikan');
     Route::resource('pembagianTugasGuru', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasGuru');
-    Route::resource('pembagianTugas', PembagianTugasGuruController::class)->names('kurikulum.pembagianTugasSiswa');
-    
+    Route::resource('jadwalKelas', PembagianJadwalPerkelasController::class)
+    ->names('kurikulum.jadwalKelas')
+    ->parameters(['jadwalKelas' => 'jadwalPelajaran']);
 });
 
 
@@ -123,7 +138,28 @@ Route::prefix('waka-kurikulum')->group(function () {
 // =============================
 // Guru & Jabatan Khusus
 // =============================
-Route::get('/guru/dashboard', fn() => view('guru.gurumapel.dashboard'))->name('guru.dashboard');
+
+Route::prefix('guru')->group(function () {
+    Route::get('/dashboard', fn() => view('guru.gurumapel.dashboard'))->name('guru.dashboard');
+    // Add more routes as needed
+    Route::resource('materi', \App\Http\Controllers\Guru\GuruMapel\MateriPelajaranController::class)->names('guru.materi');
+    Route::post('materi/{materi}/publish', [\App\Http\Controllers\Guru\GuruMapel\MateriPelajaranController::class, 'publish'])->name('guru.materi.publish');
+
+    Route::resource('tugas', \App\Http\Controllers\Guru\GuruMapel\TugasController::class)->names('guru.tugas');
+    Route::post('tugas/{tugas}/publish', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'publish'])->name('guru.tugas.publish');
+    Route::get('tugas/{tugas}/hasil', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'hasil'])->name('guru.tugas.hasil');
+    Route::get('tugas/{tugas}/jawaban/{siswa}', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'detailJawaban'])->name('guru.tugas.detail-jawaban');
+
+    Route::get('detail-soal/{id}', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'index'])->name('guru.detail.tugas');
+    Route::get('detail-soal/{id}/esay', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'esay'])->name('guru.esay.tugas');
+    Route::get('detail-soal/{id}/pilga', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'pilga'])->name('guru.pilga.tugas');
+
+    // Di dalam Route::prefix('guru')->group(function () {
+    Route::post('detail-soal/{tugas}/pilga', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'storePilga'])->name('guru.pilga.store');
+    Route::post('detail-soal/{tugas}/esay', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'storeEsay'])->name('guru.esay.store');
+    Route::delete('soal/{soal}', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'destroy'])->name('guru.soal.destroy');
+});
+
 Route::get('/kepala/dashboard', fn() => view('guru.KepalaSekolah.dashboard'))->name('kepala.dashboard');
 // Route::get('/waka-kurikulum/dashboard', fn() => view('guru.kurikulum.dashboard'))->name('waka.kurikulum.dashboard');
 Route::get('/waka-kesiswaan/dashboard', fn() => view('guru.kesiswaan.dashboard'))->name('waka.kesiswaan.dashboard');

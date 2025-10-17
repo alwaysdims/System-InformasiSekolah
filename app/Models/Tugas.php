@@ -3,11 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Tugas extends Model
 {
-    protected $fillable = ['guru_mapel_id', 'judul', 'deskripsi', 'deadline', 'tipe'];
+    protected $fillable = [
+        'guru_mapel_id', 'judul', 'deskripsi', 'deadline', 'tipe',
+        'durasi', 'bobot_pg', 'bobot_esai', 'publish_time'
+    ];
 
+    protected $casts = [
+        'publish_time' => 'datetime',
+        'deadline' => 'datetime',
+        'durasi' => 'integer',
+        'bobot_pg' => 'integer',
+        'bobot_esai' => 'integer',
+    ];
+
+    public $timestamps = false;
     public function guruMapel()
     {
         return $this->belongsTo(Guru_Mapel::class, 'guru_mapel_id');
@@ -24,10 +37,10 @@ class Tugas extends Model
         );
     }
 
-    public function kelas()
-    {
-        return $this->belongsToMany(Kelas::class, 'tugas_kelas');
-    }
+    // public function kelas()
+    // {
+    //     return $this->belongsToMany(Kelas::class, 'tugas_kelas');
+    // }
 
     public function soal()
     {
@@ -36,6 +49,17 @@ class Tugas extends Model
 
     public function jawaban()
     {
-        return $this->hasMany(TugasJawaban::class);
+        return $this->hasMany(TugasJawaban::class, 'tugas_id', 'id');
+    }
+
+    public function kelas()
+{
+    return $this->belongsToMany(Kelas::class, 'tugas_kelas', 'tugas_id', 'kelas_id');
+}
+
+
+    public function isPublished()
+    {
+        return $this->publish_time && $this->publish_time->lte(Carbon::now()) && $this->kelas->isNotEmpty();
     }
 }
