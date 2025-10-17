@@ -18,7 +18,7 @@ class PembagianTugasGuruController extends Controller
         $mapel = Mapel::all();
         $jurusan = Jurusan::all();
 
-        return view('guru.kurikulum.jadwalGuru', compact('guruMapel', 'guru', 'mapel', 'jurusan'));
+        return view('guru.kurikulum.jadwalguru', compact('guruMapel', 'guru', 'mapel', 'jurusan'));
     }
 
     public function store(Request $request)
