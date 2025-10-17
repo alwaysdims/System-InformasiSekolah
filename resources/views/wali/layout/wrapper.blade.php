@@ -1,0 +1,5 @@
+@include('wali.layout.head')
+@include('wali.layout.sidebar')
+@include('wali.layout.header')
+@include('wali.layout.content')
+@include('wali.layout.footer')

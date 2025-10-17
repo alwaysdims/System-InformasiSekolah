@@ -10,6 +10,12 @@ use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
+use App\Http\Controllers\WaliMurid\AgendaWaliController;
+use App\Http\Controllers\WaliMurid\DashboardWaliMuridController;
+use App\Http\Controllers\WaliMurid\KehadiranWaliController;
+use App\Http\Controllers\WaliMurid\NilaiWaliController;
+use App\Http\Controllers\WaliMurid\PelanggaranWaliController;
+use App\Http\Controllers\WaliMurid\PrestasiWaliController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
 use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
@@ -85,6 +91,17 @@ Route::get('/sambutan', [Landing::class, 'sambutan'])->name('sambutan');
 // Redirect sesuai role utama
 // =============================
 
+//Wali murid
+Route::prefix('wali')->group(function () {
+    Route::get('/dashboard', [DashboardWaliMuridController::class, 'index'])->name('wali.dashboard');
+
+    Route::get('/prestasi', [PrestasiWaliController::class, 'index']);
+    Route::get('/pelanggaran', [PelanggaranWaliController::class, 'index']);
+    Route::get('/agenda', [AgendaWaliController::class, 'index']);
+    Route::get('/nilai', [NilaiWaliController::class, 'index']);
+    Route::get('/kehadiran', [KehadiranWaliController::class, 'index']);
+});
+
 Route::prefix('siswa')->group(function () {
     Route::get('/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
 
@@ -98,7 +115,6 @@ Route::prefix('siswa')->group(function () {
     Route::get('tugas/{tugas}/pilga', [\App\Http\Controllers\Siswa\TugasController::class, 'pilga'])->name('siswa.pilga.tugas');
     Route::get('tugas/{tugas}/esay', [\App\Http\Controllers\Siswa\TugasController::class, 'esay'])->name('siswa.esay.tugas');
 });
-Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashboard');
 
 // =============================
 // route Guru & Jabatan Khusus dashboard

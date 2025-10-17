@@ -11,13 +11,19 @@ class Guru_Mapel extends Model
 
     public function guru()
     {
-        return $this->belongsTo(Guru::class);
+        return $this->belongsTo(Guru::class, 'guru_id');
+    }
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class, 'guru_mapel_id');
     }
 
     public function mapel()
     {
         return $this->belongsTo(Mapel::class);
     }
+    
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class);
