@@ -14,6 +14,7 @@ use App\Http\Controllers\Siswa\RuangDiskusiController;
 use App\Http\Controllers\WaliMurid\NilaiWaliController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\WaliMurid\AgendaWaliController;
+use App\Http\Controllers\guru\gurumapel\JadwalController;
 use App\Http\Controllers\WaliMurid\PrestasiWaliController;
 use App\Http\Controllers\WaliMurid\KehadiranWaliController;
 use App\Http\Controllers\Guru\GuruMapel\PengaduanController;
@@ -120,20 +121,13 @@ Route::prefix('siswa')->group(function () {
     Route::get('tugas/{tugas}/pilga', [\App\Http\Controllers\Siswa\TugasController::class, 'pilga'])->name('siswa.tugas.pilga');
     Route::get('tugas/{tugas}/esay', [\App\Http\Controllers\Siswa\TugasController::class, 'esay'])->name('siswa.tugas.esay');
 
-    // Jadwal Kelas (Resource)
     Route::resource('/jadwal-kelas', \App\Http\Controllers\Siswa\JadwalKelasController::class)->names('siswa.jadwal-kelas');
-
     // Pengaduan (Resource)
     Route::resource('/pengaduan', \App\Http\Controllers\Siswa\PengaduanController::class)->names('siswa.pengaduan');
 
-    // Ruang Diskusi (Resource)
-    // Fetch comments for a specific forum
-    Route::get('/ruang-diskusi/{forum}/komentar', [RuangDiskusiController::class, 'getKomentar'])->name('siswa.ruang-diskusi.komentar');
-
-    // Store a new comment
-    Route::post('siswa/ruang-diskusi/{forum}/komentar', [RuangDiskusiController::class, 'store'])
-    ->name('siswa.ruang-diskusi.komentar');
-
+    Route::get('/ruang-diskusi', [RuangDiskusiController::class, 'index'])->name('siswa.ruang-diskusi.index');
+    Route::get('/ruang-diskusi/{id}', [RuangDiskusiController::class, 'show'])->name('siswa.ruang-diskusi.show');
+    Route::post('/ruang-diskusi/{forum}/komentar', [RuangDiskusiController::class, 'store'])->name('siswa.ruang-diskusi.komentar');
 });
 
 // =============================
@@ -181,6 +175,12 @@ Route::prefix('guru')->group(function () {
 
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('guru.pengaduan');
     Route::post('/pengaduan/{pengaduanId}/response', [PengaduanController::class, 'storeResponse'])->name('guru.pengaduan.response');
+
+    Route::get('/ruang-diskusi', [\App\Http\Controllers\Guru\GuruMapel\RuangDiskusiController::class, 'index'])->name('siswa.ruang-diskusi.index');
+    Route::get('/ruang-diskusi/{id}', [\App\Http\Controllers\Guru\GuruMapel\RuangDiskusiController::class, 'show'])->name('siswa.ruang-diskusi.show');
+    Route::post('/ruang-diskusi/{forum}/komentar', [\App\Http\Controllers\Guru\GuruMapel\RuangDiskusiController::class, 'store'])->name('siswa.ruang-diskusi.komentar');
+
+    Route::get('jadwal-pelajaran', [JadwalController::class, 'index'])->name('guru.jadwal-pelajaran.index');
 });
 
 // kesiswaan

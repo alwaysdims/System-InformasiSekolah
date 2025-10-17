@@ -34,12 +34,18 @@
                     <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-xl shadow-lg hidden z-50">
                         <div class="flex flex-col items-center py-4 px-4">
                             <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png" alt="Foto Guru" class="h-10 w-10 rounded-full object-cover border-2 border-white shadow" />
-                            <p class="mt-2 font-semibold text-green-600">Guru Kurikulum</p>
+                            <p class="mt-2 font-semibold text-green-600">{{ Auth::user()->username }}</p>
                         </div>
                         <hr class="border-gray-200">
                         <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-center">Edit Profil</a>
-                        <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-blue-50 text-center text-red-500">Logout</a>
-                    </div>
+                        <form action="{{ route('logout') }}" method="POST" class="text-center">
+                            @csrf
+                            <button type="submit" class="block w-full px-4 py-2 hover:bg-blue-50 text-red-500">
+                                Logout
+                            </button>
+                        </form>
+
+
                 </div>
             </div>
         </div>

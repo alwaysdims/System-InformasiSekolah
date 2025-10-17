@@ -1,41 +1,35 @@
 <?php
-namespace App\Http\Controllers\Siswa;
 
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers\Guru\GuruMapel;
+
 use App\Models\ForumDiskusi;
-use App\Models\ForumKomentar;
 use Illuminate\Http\Request;
+use App\Models\ForumKomentar;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class RuangDiskusiController extends Controller
 {
-    /**
-     * Display a listing of discussion forums.
-     */
     public function index()
     {
-        $forums = ForumDiskusi::with(['guruMapel.mapel', 'creator'])->get();
-        return view('siswa.ruang-diskusi', compact('forums'));
+        $forums = ForumDiskusi::with(['guruMapel.mapel', 'creator', 'komentar'])->latest('dibuat_pada')->get();
+        return view('guru.gurumapel.forum-diskusi', compact('forums'));
     }
 
-    /**
-     * Display a specific discussion forum with its comments.
-     */
     public function show($id)
     {
         $forum = ForumDiskusi::with(['guruMapel.mapel', 'creator', 'komentar.user'])->findOrFail($id);
-        $forums = ForumDiskusi::with(['guruMapel.mapel', 'creator'])->get(); // For sidebar
-        return view('siswa.diskusi', compact('forum', 'forums'));
+        $forums = ForumDiskusi::with(['guruMapel.mapel', 'creator', 'komentar'])->latest('dibuat_pada')->get(); // For sidebar
+        return view('guru.gurumapel.diskusi', compact('forum', 'forums'));
     }
 
-    /**
-     * Store a new comment in the specified forum.
-     */
     public function store(Request $request, $forum)
     {
         $request->validate([
             'komentar' => 'required|string|max:1000',
         ]);
+
+        $forumModel = ForumDiskusi::findOrFail($forum); // Validasi forum exists
 
         try {
             $komentar = ForumKomentar::create([
@@ -51,7 +45,7 @@ class RuangDiskusiController extends Controller
                     'id' => $komentar->id,
                     'user' => [
                         'name' => Auth::user()->name,
-                        'avatar' => Auth::user()->avatar ?? 'default.png',
+                        'avatar' => Auth::user()->avatar ?? asset('images/default.png'),
                     ],
                     'komentar' => $komentar->komentar,
                     'dibuat_pada' => $komentar->dibuat_pada->diffForHumans(),
