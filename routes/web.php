@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Landing;
+use App\Http\Controllers\Siswa\RuangDiskusiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
@@ -124,7 +125,13 @@ Route::prefix('siswa')->group(function () {
     Route::resource('/pengaduan', \App\Http\Controllers\Siswa\PengaduanController::class)->names('siswa.pengaduan');
 
     // Ruang Diskusi (Resource)
-    Route::resource('/ruang-diskusi', \App\Http\Controllers\Siswa\RuangDiskusiController::class)->names('siswa.ruang-diskusi');
+    // Fetch comments for a specific forum
+    Route::get('/ruang-diskusi/{forum}/komentar', [RuangDiskusiController::class, 'getKomentar'])->name('siswa.ruang-diskusi.komentar');
+
+    // Store a new comment
+    Route::post('siswa/ruang-diskusi/{forum}/komentar', [RuangDiskusiController::class, 'store'])
+    ->name('siswa.ruang-diskusi.komentar');
+
 });
 
 // =============================

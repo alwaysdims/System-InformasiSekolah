@@ -57,6 +57,11 @@ class User extends Authenticatable
         );
     }
 
+    public function komentar()
+    {
+        return $this->hasMany(ForumKomentar::class);
+    }
+
 
     public function kalenderPendidikan()
     {
