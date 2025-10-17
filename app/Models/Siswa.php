@@ -20,6 +20,7 @@ class Siswa extends Model
     //     return $this->belongsTo(Kelas::class);
     // }
 
+
     public function jurusan()
     {
         return $this->belongsTo(Jurusan::class);
@@ -37,7 +38,7 @@ class Siswa extends Model
     public function kehadiran() {
         return $this->hasMany(KehadiranSiswa::class, 'siswa_id', 'id');
     }
-    
+
     public function siswaKelas()
     {
         return $this->hasMany(SiswaKelas::class);
@@ -53,11 +54,16 @@ class Siswa extends Model
         return $this->hasMany(TugasJawaban::class);
     }
 
+    // public function kelas()
+    // {
+    //     return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id')
+    //                 ->withPivot('tahun_ajaran');
+    // }
+
     public function kelas()
-    {
-        return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id')
-                    ->withPivot('tahun_ajaran');
-    }
+{
+    return $this->belongsTo(Kelas::class, 'kelas_id');
+}
 
     public function pelanggaran()
     {

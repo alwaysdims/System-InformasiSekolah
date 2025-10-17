@@ -1,9 +1,9 @@
 @extends('siswa.layout.main')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6 w-[120%] ">
     <!-- Header -->
-    <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 w-full rounded-xl shadow-lg">
+    <div class="bg-gradient-to-r from-blue-500 to-blue-700  text-white p-6 rounded-xl shadow-lg">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-2xl sm:text-3xl font-bold">📚 Tugas & Ujian Saya</h1>
@@ -28,7 +28,7 @@
     <!-- Tugas Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        
+
         @forelse($tugas ?? [] as $tgs)
         <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <!-- Header Card -->

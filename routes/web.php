@@ -105,17 +105,25 @@ Route::prefix('wali')->group(function () {
 });
 
 Route::prefix('siswa')->group(function () {
+    // Dashboard
     Route::get('/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
 
+    // Tugas/Ujian (Resource + Custom Routes)
     Route::resource('/tugas', \App\Http\Controllers\Siswa\TugasController::class)->names('siswa.tugas');
-
     Route::get('tugas/{tugas}/detail', [\App\Http\Controllers\Siswa\TugasController::class, 'detail'])->name('siswa.tugas.detail');
     Route::get('tugas/{tugas}/kerjakan', [\App\Http\Controllers\Siswa\TugasController::class, 'kerjakan'])->name('siswa.tugas.kerjakan');
     Route::post('tugas/{tugas}/submit', [\App\Http\Controllers\Siswa\TugasController::class, 'submit'])->name('siswa.tugas.submit');
+    Route::get('tugas/{tugas}/pilga', [\App\Http\Controllers\Siswa\TugasController::class, 'pilga'])->name('siswa.tugas.pilga');
+    Route::get('tugas/{tugas}/esay', [\App\Http\Controllers\Siswa\TugasController::class, 'esay'])->name('siswa.tugas.esay');
 
-    // New routes for answering multiple-choice and essay questions
-    Route::get('tugas/{tugas}/pilga', [\App\Http\Controllers\Siswa\TugasController::class, 'pilga'])->name('siswa.pilga.tugas');
-    Route::get('tugas/{tugas}/esay', [\App\Http\Controllers\Siswa\TugasController::class, 'esay'])->name('siswa.esay.tugas');
+    // Jadwal Kelas (Resource)
+    Route::resource('/jadwal-kelas', \App\Http\Controllers\Siswa\JadwalKelasController::class)->names('siswa.jadwal-kelas');
+
+    // Pengaduan (Resource)
+    Route::resource('/pengaduan', \App\Http\Controllers\Siswa\PengaduanController::class)->names('siswa.pengaduan');
+
+    // Ruang Diskusi (Resource)
+    Route::resource('/ruang-diskusi', \App\Http\Controllers\Siswa\RuangDiskusiController::class)->names('siswa.ruang-diskusi');
 });
 
 // =============================

@@ -31,8 +31,8 @@
                             <td class="px-4 py-3">{{ $index + 1 }}</td>
                             <td class="px-4 py-3">{{ $item->nama }}</td>
                             <td class="px-4 py-3">{{ $item->nis ?? '-' }}</td>
-                            <td class="px-4 py-3">{{ $item->user->name ?? '-' }}</td>
-                            <td class="px-4 py-3">{{ $item->kelas->nama ?? '-' }}</td>
+                            <td class="px-4 py-3">{{ $item->user->nama ?? '-' }}</td>
+                            <td class="px-4 py-3">{{ $item->kelas->nama_kelas ?? '-' }}</td>
                             <td class="px-4 py-3">{{ $item->jurusan->nama ?? '-' }}</td>
                             <td class="px-4 py-3">
                                 @foreach($item->waliMurid as $wali)
@@ -44,7 +44,7 @@
                                     nama: '{{ addslashes($item->nama) }}',
                                     nis: '{{ addslashes($item->nis ?? '-') }}',
                                     user: '{{ addslashes($item->user->name ?? '-') }}',
-                                    kelas: '{{ addslashes($item->kelas->nama ?? '-') }}',
+                                    kelas: '{{ addslashes($item->kelas->nama_kelas ?? '-') }}',
                                     jurusan: '{{ addslashes($item->jurusan->nama ?? '-') }}',
                                     wali_murid: '{{ addslashes(implode(', ', $item->waliMurid->pluck('nama')->toArray())) }}',
                                     alamat: '{{ addslashes($item->alamat ?? '-') }}',
@@ -165,7 +165,7 @@
                 <select name="kelas_id" id="edit_kelas_id{{ $item->id }}" class="w-full border rounded-lg px-3 py-2">
                     <option value="">-- Pilih Kelas --</option>
                     @foreach($kelas as $k)
-                        <option value="{{ $k->id }}" {{ $item->kelas_id == $k->id ? 'selected' : '' }}>{{ $k->nama }}</option>
+                        <option value="{{ $k->id }}" {{ $item->kelas_id == $k->id ? 'selected' : '' }}>{{ $k->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>

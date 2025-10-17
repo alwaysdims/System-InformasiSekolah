@@ -61,7 +61,7 @@
 
         <!-- Tombol Aksi -->
         <div class="mt-6 flex space-x-3">
-            <a href="{{ route('siswa.pilga.tugas', $tugas->id) }}"
+            <a href="{{ route('siswa.tugas.pilga', $tugas->id) }}"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -70,7 +70,7 @@
                 </svg>
                 Jawab Pilihan Ganda
             </a>
-            <a href="{{ route('siswa.esay.tugas', $tugas->id) }}"
+            <a href="{{ route('siswa.tugas.esay', $tugas->id) }}"
                 class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">

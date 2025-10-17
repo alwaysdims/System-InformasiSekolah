@@ -60,13 +60,13 @@ class TugasController extends Controller
 
         // Check if the logged-in student is registered in one of the task's classes
 
-        $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
-        ->where('siswa_id', Auth::user()->siswa->id)
-        ->exists();
+        // $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
+        // ->where('siswa_id', Auth::user()->siswa->id)
+        // ->exists();
 
-        if (!$terdaftar) {
-        return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
-        }
+        // if (!$terdaftar) {
+        // return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
+        // }
 
         return view('siswa.detail-soal', compact('tugas'));
     }
