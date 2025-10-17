@@ -55,7 +55,7 @@ class AuthController extends Controller
 
                     if ($guru) {
                         switch ($guru->jabatan) {
-                            case 'kepala_sekolah':
+                            case 'Kepala Sekolah':
                                 return redirect()->route('kepala.dashboard');
                             case 'Waka Kurikulum':
                                 return redirect()->route('waka.kurikulum.dashboard');

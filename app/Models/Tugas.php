@@ -53,10 +53,14 @@ class Tugas extends Model
     }
 
     public function kelas()
-{
-    return $this->belongsToMany(Kelas::class, 'tugas_kelas', 'tugas_id', 'kelas_id');
-}
+    {
+        return $this->belongsToMany(Kelas::class, 'tugas_kelas', 'tugas_id', 'kelas_id');
+    }
 
+    public function nilai()
+    {
+        return $this->hasMany(Nilai::class, 'tugas_id');
+    }
 
     public function isPublished()
     {
