@@ -16,6 +16,6 @@ class PelanggaranSiswa extends Model
 
     public function ditanganiOleh()
     {
-        return $this->belongsTo(User::class, 'ditangani_oleh');
+        return $this->belongsTo(Guru::class, 'ditangani_oleh', 'id');
     }
 }

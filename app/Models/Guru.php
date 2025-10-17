@@ -29,4 +29,17 @@ class Guru extends Model
     {
         return $this->belongsToMany(Kelas::class, 'wali_kelas');
     }
+
+    public function pelanggaranSiswa() {
+        return $this->hasMany(PelanggaranSiswa::class, 'ditangani_oleh', 'id');
+    }
+
+    public function agenda() {
+        return $this->hasMany(Agenda::class, 'dibuat_oleh', 'id');
+    }
+
+    public function guruMapel()
+    {
+        return $this->hasMany(Guru_mapel::class, 'guru_id');
+    }
 }

@@ -10,7 +10,18 @@ class Tugas extends Model
 
     public function guruMapel()
     {
-        return $this->belongsTo(Guru_Mapel::class);
+        return $this->belongsTo(Guru_Mapel::class, 'guru_mapel_id');
+    }
+
+    public function guru() {
+        return $this->hasOneThrough(
+            Guru::class,
+            Guru_mapel::class,
+            'id',
+            'id',
+            'guru_mapel_id',
+            'guru_id'
+        );
     }
 
     public function kelas()

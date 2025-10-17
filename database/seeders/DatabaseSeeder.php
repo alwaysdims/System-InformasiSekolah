@@ -26,6 +26,13 @@ class DatabaseSeeder extends Seeder
             SiswaKelasSeeder::class,
             WaliMuridSeeder::class,
             WaliMuridSiswaSeeder::class,
+            PrestasiSiswaSeeder::class,
+            PelanggaranSiswaSeeder::class,
+            AgendaSeeder::class,
+            TugasSeeder::class,
+            TugasSoalSeeder::class,
+            TugasJawabanSeeder::class,
+            KehadiranSiswaSeeder::class
         ]);
     }
 }

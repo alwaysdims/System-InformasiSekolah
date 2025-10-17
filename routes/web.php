@@ -13,6 +13,12 @@ use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
 use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
+use App\Http\Controllers\WaliMurid\AgendaWaliController;
+use App\Http\Controllers\WaliMurid\DashboardWaliMuridController;
+use App\Http\Controllers\WaliMurid\KehadiranWaliController;
+use App\Http\Controllers\WaliMurid\NilaiWaliController;
+use App\Http\Controllers\WaliMurid\PelanggaranWaliController;
+use App\Http\Controllers\WaliMurid\PrestasiWaliController;
 
 Route::get('/', function () {
     return view('landing.landing');
@@ -84,7 +90,17 @@ Route::get('/sambutan', [Landing::class, 'sambutan'])->name('sambutan');
 // Redirect sesuai role utama
 // =============================
 Route::get('/siswa/dashboard', fn() => view('siswa.dashboard'))->name('siswa.dashboard');
-Route::get('/wali/dashboard', fn() => view('wali.dashboard'))->name('wali.dashboard');
+
+//Wali murid
+Route::prefix('wali')->group(function () {
+    Route::get('/dashboard', [DashboardWaliMuridController::class, 'index'])->name('wali.dashboard');
+
+    Route::get('/prestasi', [PrestasiWaliController::class, 'index']);
+    Route::get('/pelanggaran', [PelanggaranWaliController::class, 'index']);
+    Route::get('/agenda', [AgendaWaliController::class, 'index']);
+    Route::get('/nilai', [NilaiWaliController::class, 'index']);
+    Route::get('/kehadiran', [KehadiranWaliController::class, 'index']);
+});
 
 // =============================
 // route Guru & Jabatan Khusus dashboard
