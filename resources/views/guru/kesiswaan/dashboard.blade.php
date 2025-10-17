@@ -1,5 +1,5 @@
-@extends('guru.kesiswaan.layout.main', ['title' => 'Dashboard Kesiswaan'])
+@extends('guru.kesiswaan.layout.wrapper', ['title' => 'Dashboard Kesiswaan'])
 @section('title', 'Dashboard Kesiswaan')
 @section('content')
-<h1>lsdakjfls</h1>
+<h1>l</h1>
 @endsection

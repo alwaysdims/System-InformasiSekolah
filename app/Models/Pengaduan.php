@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Siswa;
+use App\Models\PengaduanChat;
+use App\Models\PengaduanGambar;
 use Illuminate\Database\Eloquent\Model;
 
 class Pengaduan extends Model
 {
     protected $table = 'pengaduan';
-    
+
     protected $fillable = ['siswa_id', 'judul', 'isi', 'status'];
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
     protected $dates = ['dibuat_pada'];
 

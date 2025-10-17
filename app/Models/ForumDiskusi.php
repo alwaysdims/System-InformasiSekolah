@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Guru_mapel;
+use App\Models\ForumKomentar;
 use Illuminate\Database\Eloquent\Model;
 
 class ForumDiskusi extends Model
@@ -11,7 +14,7 @@ class ForumDiskusi extends Model
 
     public function guruMapel()
     {
-        return $this->belongsTo(Guru_Mapel::class);
+        return $this->belongsTo(Guru_mapel::class);
     }
 
     public function creator()

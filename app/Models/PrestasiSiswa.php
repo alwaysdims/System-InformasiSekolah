@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Model;
 
 class PrestasiSiswa extends Model

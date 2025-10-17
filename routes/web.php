@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Landing;
-use App\Http\Controllers\Siswa\RuangDiskusiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
+use App\Http\Controllers\Siswa\RuangDiskusiController;
 use App\Http\Controllers\WaliMurid\NilaiWaliController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\WaliMurid\AgendaWaliController;
@@ -20,7 +20,9 @@ use App\Http\Controllers\Guru\GuruMapel\PengaduanController;
 use App\Http\Controllers\WaliMurid\PelanggaranWaliController;
 use App\Http\Controllers\Guru\KepalaSekolah\LaporanController;
 use App\Http\Controllers\Guru\KepalaSekolah\DashboardController;
+use App\Http\Controllers\Guru\Kesiswaan\PrestasiSiswaController;
 use App\Http\Controllers\WaliMurid\DashboardWaliMuridController;
+use App\Http\Controllers\Guru\Kesiswaan\PelanggaranSiswaController;
 use App\Http\Controllers\Guru\kurikulum\KalenderPendidikanController;
 use App\Http\Controllers\Guru\kurikulum\PembagianTugasGuruController;
 use App\Http\Controllers\Guru\Kurikulum\PembagianJadwalPerkelasController;
@@ -180,6 +182,66 @@ Route::prefix('guru')->group(function () {
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('guru.pengaduan');
     Route::post('/pengaduan/{pengaduanId}/response', [PengaduanController::class, 'storeResponse'])->name('guru.pengaduan.response');
 });
+
+// kesiswaan
+Route::prefix('guru/kesiswaan')
+    ->name('guru.kesiswaan.') // semua route di dalam ini akan otomatis diawali nama guru.kesiswaan.*
+    ->group(function () {
+
+        // DASHBOARD WAKA KESISWAAN
+        Route::get('/dashboard', fn() => view('guru.kesiswaan.dashboard'))
+            ->name('dashboard');
+
+        // DATA PELANGGARAN SISWA (CRUD)
+        Route::resource('pelanggaran', PelanggaranSiswaController::class)
+            ->parameters(['pelanggaran' => 'pelanggaranSiswa'])
+            ->names([
+                'index' => 'pelanggaran.index',
+                'create' => 'pelanggaran.create',
+                'store' => 'pelanggaran.store',
+                'show' => 'pelanggaran.show',
+                'edit' => 'pelanggaran.edit',
+                'update' => 'pelanggaran.update',
+                'destroy' => 'pelanggaran.destroy',
+            ]);
+
+        // DATA PRESTASI SISWA (CRUD)
+        Route::resource('prestasi', PrestasiSiswaController::class)
+            ->parameters(['prestasi' => 'prestasiSiswa'])
+            ->names([
+                'index' => 'prestasi.index',
+                'create' => 'prestasi.create',
+                'store' => 'prestasi.store',
+                'show' => 'prestasi.show',
+                'edit' => 'prestasi.edit',
+                'update' => 'prestasi.update',
+                'destroy' => 'prestasi.destroy',
+            ]);
+
+        // // LAYANAN ADUAN SISWA
+        // Route::get('/pengaduan', [PengaduanController::class, 'index'])
+        //     ->name('pengaduan.index');
+        // Route::get('/pengaduan/{pengaduan}', [PengaduanController::class, 'show'])
+        //     ->name('pengaduan.show');
+        // Route::post('/pengaduan/{pengaduan}/status', [PengaduanController::class, 'updateStatus'])
+        //     ->name('pengaduan.status');
+
+        // // Chat interaktif pengaduan
+        // Route::get('/pengaduan/{pengaduan}/chat', [PengaduanChatController::class, 'index'])
+        //     ->name('pengaduan.chat');
+        // Route::post('/pengaduan/{pengaduan}/chat', [PengaduanChatController::class, 'store'])
+        //     ->name('pengaduan.chat.store');
+
+        // // LAPORAN & REKAP
+        // Route::get('/laporan', [LaporanKesiswaanController::class, 'index'])
+        //     ->name('laporan.index');
+        // Route::get('/laporan/export/pdf', [LaporanKesiswaanController::class, 'exportPdf'])
+        //     ->name('laporan.export.pdf');
+        // Route::get('/laporan/export/excel', [LaporanKesiswaanController::class, 'exportExcel'])
+        //     ->name('laporan.export.excel');
+    });
+
+
 
 Route::get('/kepala/dashboard', [DashboardController::class, 'index'])->name('kepala.dashboard');
 Route::get('/kepala/laporan/siswa', [LaporanController::class, 'showLaporanSiswa'])->name('kepala.laporan_siswa');

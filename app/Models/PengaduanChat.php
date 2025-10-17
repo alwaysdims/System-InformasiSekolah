@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Pengaduan;
 use Illuminate\Database\Eloquent\Model;
 
 class PengaduanChat extends Model
@@ -9,7 +11,7 @@ class PengaduanChat extends Model
     protected $table = 'pengaduan_chat';
     protected $fillable = ['pengaduan_id', 'user_id', 'pesan'];
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
     protected $dates = ['dibuat_pada'];
 

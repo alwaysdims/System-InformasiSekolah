@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\ForumDiskusi;
 use Illuminate\Database\Eloquent\Model;
 
 class ForumKomentar extends Model

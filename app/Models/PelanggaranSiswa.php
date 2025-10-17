@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Guru;
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Model;
 
 class PelanggaranSiswa extends Model

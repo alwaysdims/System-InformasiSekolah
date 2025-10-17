@@ -1,0 +1,5 @@
+@include('guru.kesiswaan.layout.head')
+@include('guru.kesiswaan.layout.sidebar')
+@include('guru.kesiswaan.layout.header')
+@include('guru.kesiswaan.layout.content')
+@include('guru.kesiswaan.layout.footer')

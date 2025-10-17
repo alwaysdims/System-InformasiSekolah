@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pengaduan;
 use Illuminate\Database\Eloquent\Model;
 
 class PengaduanGambar extends Model

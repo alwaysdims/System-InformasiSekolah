@@ -6,6 +6,8 @@ use App\Models\Guru;
 use App\Models\Admin;
 use App\Models\Siswa;
 use App\Models\WaliMurid;
+use App\Models\PengaduanChat;
+use App\Models\PelanggaranSiswa;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,4 +73,16 @@ class User extends Authenticatable
     // {
     //     $this->attributes['password'] = bcrypt($value);
     // }
+
+    // Relasi ke pelanggaran yang ditangani waka/guru
+    public function pelanggaranDitangani()
+    {
+        return $this->hasMany(PelanggaranSiswa::class, 'ditangani_oleh');
+    }
+
+    // Relasi ke pengaduan chat
+    public function pengaduanChats()
+    {
+        return $this->hasMany(PengaduanChat::class, 'user_id');
+    }
 }
