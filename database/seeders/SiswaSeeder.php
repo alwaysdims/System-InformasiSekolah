@@ -4,21 +4,49 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class SiswaSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        DB::table('siswa')->insert([
-            'user_id'       => 3, // siswa01
-            'nis'           => '2025001',
-            'nama'          => 'Adi Siswa',
-            'jenis_kelamin' => 'Laki-laki',
-            'tempat_lahir'  => 'Bandung',
-            'tanggal_lahir' => '2008-05-15',
-            'alamat'        => 'Jl. Belajar No.2',
-            'no_hp'         => '081377788899',
-            'jurusan_id'    => 1, // RPL
-        ]);
+        $data = [];
+
+        for ($i = 1; $i <= 15; $i++) {
+            $username = 'siswa' . $i;
+            $email = $username . '@example.com';
+
+            // ✅ Cek apakah user sudah ada agar tidak duplikat
+            $existingUser = DB::table('users')->where('username', $username)->first();
+
+            if (!$existingUser) {
+                $userId = DB::table('users')->insertGetId([
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => Hash::make('password'),
+                    'role' => 'siswa',
+                ]);
+            } else {
+                $userId = $existingUser->id;
+            }
+
+            // ✅ Cek apakah siswa sudah ada agar tidak duplikat
+            $existingSiswa = DB::table('siswa')->where('user_id', $userId)->first();
+
+            if (!$existingSiswa) {
+                $data[] = [
+                    'user_id' => $userId,
+                    'nis' => 'NIS' . $i,
+                    'nama' => 'Siswa ' . $i,
+                    'alamat' => 'Alamat Siswa ' . $i,
+                    'no_hp' => '083' . $i . '000',
+                    'jurusan_id' => rand(1, 4),
+                ];
+            }
+        }
+
+        if (!empty($data)) {
+            DB::table('siswa')->insert($data);
+        }
     }
 }

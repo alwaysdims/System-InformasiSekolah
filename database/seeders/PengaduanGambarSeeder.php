@@ -1,20 +1,20 @@
 <?php
-// MapelSeeder.php
+// PengaduanGambarSeeder.php
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MapelSeeder extends Seeder
+class PengaduanGambarSeeder extends Seeder
 {
     public function run()
     {
         $data = [];
         for ($i = 1; $i <= 15; $i++) {
             $data[] = [
-                'kode_mapel' => 'MP' . $i,
-                'nama_mapel' => 'Mapel ' . $i,
+                'pengaduan_id' => rand(1, 15),
+                'file_path' => '/gambar/' . $i . '.jpg',
             ];
         }
-        DB::table('mapel')->insert($data);
+        DB::table('pengaduan_gambar')->insert($data);
     }
 }

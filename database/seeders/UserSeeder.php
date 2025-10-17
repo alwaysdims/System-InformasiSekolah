@@ -1,44 +1,60 @@
 <?php
-
+// UserSeeder.php
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        DB::table('users')->insert([
-            [
-                'username' => 'admin01',
-                'email' => 'admin@example.com',
-                'password' => Hash::make('password'),
+        $data = [];
+        // 3 Admin (ID 1-3)
+        for ($i = 1; $i <= 3; $i++) {
+            $data[] = [
+                'username' => 'admin' . $i,
+                'email' => 'admin' . $i . '@school.com',
+                'password' => Hash::make('password123'),
                 'role' => 'admin',
-                'created_at' => now(),
-            ],
-            [
-                'username' => 'guru01',
-                'email' => 'guru@example.com',
-                'password' => Hash::make('password'),
+            ];
+        }
+        // 5 Guru (ID 4-8)
+        for ($i = 1; $i <= 5; $i++) {
+            $data[] = [
+                'username' => 'guru' . $i,
+                'email' => 'guru' . $i . '@school.com',
+                'password' => Hash::make('password123'),
                 'role' => 'guru',
-                'created_at' => now(),
-            ],
-            [
-                'username' => 'siswa01',
-                'email' => 'siswa@example.com',
-                'password' => Hash::make('password'),
+            ];
+        }
+        // 5 Siswa (ID 9-13)
+        for ($i = 1; $i <= 5; $i++) {
+            $data[] = [
+                'username' => 'siswa' . $i,
+                'email' => 'siswa' . $i . '@school.com',
+                'password' => Hash::make('password123'),
                 'role' => 'siswa',
-                'created_at' => now(),
-            ],
-            [
-                'username' => 'wali01',
-                'email' => 'wali@example.com',
-                'password' => Hash::make('password'),
+            ];
+        }
+        // 2 Wali Murid (ID 14-15)
+        for ($i = 1; $i <= 2; $i++) {
+            $data[] = [
+                'username' => 'wali' . $i,
+                'email' => 'wali' . $i . '@school.com',
+                'password' => Hash::make('password123'),
                 'role' => 'wali_murid',
-                'created_at' => now(),
-            ],
-        ]);
+            ];
+        }
+        // Tambah hingga total 15 user dengan mix role
+        for ($i = 16; $i <= 20; $i++) {  // Tambahan siswa/guru
+            $data[] = [
+                'username' => 'user' . $i,
+                'email' => 'user' . $i . '@school.com',
+                'password' => Hash::make('password123'),
+                'role' => ($i % 2 == 0) ? 'siswa' : 'guru',
+            ];
+        }
+        DB::table('users')->insert($data);
     }
 }

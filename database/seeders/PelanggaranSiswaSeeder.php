@@ -1,26 +1,23 @@
 <?php
-
+// PelanggaranSiswaSeeder.php
 namespace Database\Seeders;
-
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class PelanggaranSiswaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        DB::table('pelanggaran_siswa')->insert([
-            'siswa_id' => 1,
-            'jenis_pelanggaran' => 'terlambat sekolah',
-            'keterangan' => 'Mendapatkan 10 poin pelanggaran dikarenakan terlambat masuk sekolah',
-            'tanggal' => date('Y-m-d'),
-            'ditangani_oleh' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        $data = [];
+        for ($i = 1; $i <= 15; $i++) {
+            $data[] = [
+                'siswa_id' => rand(1, 15),
+                'jenis_pelanggaran' => 'Terlambat',
+                'keterangan' => 'Ket ' . $i,
+                'tanggal' => date('Y-m-d'),
+                'ditangani_oleh' => rand(1, 15),  // Guru
+            ];
+        }
+        DB::table('pelanggaran_siswa')->insert($data);
     }
 }

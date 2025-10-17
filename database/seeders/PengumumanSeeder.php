@@ -1,20 +1,21 @@
 <?php
-// MapelSeeder.php
+// PengumumanSeeder.php
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MapelSeeder extends Seeder
+class PengumumanSeeder extends Seeder
 {
     public function run()
     {
         $data = [];
         for ($i = 1; $i <= 15; $i++) {
             $data[] = [
-                'kode_mapel' => 'MP' . $i,
-                'nama_mapel' => 'Mapel ' . $i,
+                'judul' => 'Pengumuman ' . $i,
+                'isi' => 'Isi ' . $i,
+                'dibuat_oleh' => rand(1, 20),
             ];
         }
-        DB::table('mapel')->insert($data);
+        DB::table('pengumuman')->insert($data);
     }
 }

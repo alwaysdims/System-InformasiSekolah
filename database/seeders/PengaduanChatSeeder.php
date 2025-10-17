@@ -1,20 +1,21 @@
 <?php
-// MapelSeeder.php
+// PengaduanChatSeeder.php
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MapelSeeder extends Seeder
+class PengaduanChatSeeder extends Seeder
 {
     public function run()
     {
         $data = [];
         for ($i = 1; $i <= 15; $i++) {
             $data[] = [
-                'kode_mapel' => 'MP' . $i,
-                'nama_mapel' => 'Mapel ' . $i,
+                'pengaduan_id' => rand(1, 15),
+                'user_id' => rand(1, 20),
+                'pesan' => 'Pesan ' . $i,
             ];
         }
-        DB::table('mapel')->insert($data);
+        DB::table('pengaduan_chat')->insert($data);
     }
 }

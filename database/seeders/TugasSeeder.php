@@ -1,27 +1,29 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class TugasSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        DB::table('tugas')->insert(
-            [
-                'guru_mapel_id' => 1,
-                'judul' => 'Ulangan harian IPA kelas XII',
-                'deskripsi' => 'Kerjakan tugas dengan sungguh sungguh dan tanpa mencontek',
-                'deadline' => date('Y-m-d-H-i-s'),
-                'tipe' => 'Pilihan Ganda',
-                'dibuat_pada' => now()
-            ],
-        );
+        $data = [];
+        $tipeList = ['Pilihan Ganda', 'Essay','Campuran']; // ✅ enum disesuaikan
+
+        for ($i = 1; $i <= 15; $i++) {
+            $data[] = [
+                'guru_mapel_id' => rand(1, 15),
+                'judul' => 'Tugas ' . $i,
+                'deskripsi' => 'Desk ' . $i,
+                'deadline' => now()->addDays($i),
+                'publish_time' => now(),
+                'tipe' => $tipeList[array_rand($tipeList)],
+                'bobot_pg' => 50,
+                'bobot_esai' => 50,
+            ];
+        }
+
+        DB::table('tugas')->insert($data);
     }
 }

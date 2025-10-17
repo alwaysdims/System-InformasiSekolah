@@ -1,19 +1,22 @@
 <?php
-
+// WaliMuridSeeder.php
 namespace Database\Seeders;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class WaliMuridSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        DB::table('wali_murid')->insert([
-            'user_id' => 4,
-            'nama' => 'Bapak Budi',
-            'no_hp' => '081298765432',
-            'alamat' => 'Jl. Mawar No.10',
-        ]);
+        $data = [];
+        for ($i = 1; $i <= 15; $i++) {
+            $data[] = [
+                'user_id' => 13 + $i,  // User wali
+                'nama' => 'Wali ' . $i,
+                'no_hp' => '084' . $i . '000',
+                'alamat' => 'Alamat Wali ' . $i,
+            ];
+        }
+        DB::table('wali_murid')->insert($data);
     }
 }

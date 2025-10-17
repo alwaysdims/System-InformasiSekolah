@@ -1,23 +1,21 @@
 <?php
-// TugasJawabanSeeder.php
+// NilaiSeeder.php
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TugasJawabanSeeder extends Seeder
+class NilaiSeeder extends Seeder
 {
     public function run()
     {
         $data = [];
         for ($i = 1; $i <= 15; $i++) {
             $data[] = [
-                'tugas_id' => rand(1, 15),
                 'siswa_id' => rand(1, 15),
-                'soal_id' => rand(1, 15),
-                'jawaban' => 'A',
+                'tugas_id' => rand(1, 15),
                 'nilai' => rand(50, 100),
             ];
         }
-        DB::table('tugas_jawaban')->insert($data);
+        DB::table('nilai')->insert($data);
     }
 }
