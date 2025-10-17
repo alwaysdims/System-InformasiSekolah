@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Landing;
-use App\Http\Controllers\Siswa\RuangDiskusiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DataGuruController;
@@ -11,9 +10,11 @@ use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataMapelController;
 use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
+use App\Http\Controllers\Siswa\RuangDiskusiController;
 use App\Http\Controllers\WaliMurid\NilaiWaliController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\WaliMurid\AgendaWaliController;
+use App\Http\Controllers\guru\gurumapel\JadwalController;
 use App\Http\Controllers\WaliMurid\PrestasiWaliController;
 use App\Http\Controllers\WaliMurid\KehadiranWaliController;
 use App\Http\Controllers\Guru\GuruMapel\PengaduanController;
@@ -179,6 +180,8 @@ Route::prefix('guru')->group(function () {
 
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('guru.pengaduan');
     Route::post('/pengaduan/{pengaduanId}/response', [PengaduanController::class, 'storeResponse'])->name('guru.pengaduan.response');
+
+    Route::get('jadwal-pelajaran', [JadwalController::class, 'index'])->name('guru.jadwal-pelajaran.index');
 });
 
 Route::get('/kepala/dashboard', [DashboardController::class, 'index'])->name('kepala.dashboard');
