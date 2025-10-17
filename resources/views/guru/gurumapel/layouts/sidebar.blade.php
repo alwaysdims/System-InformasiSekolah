@@ -23,7 +23,7 @@
         </a>
 
         <!-- Forum Diskusi -->
-        <a href="#"
+        <a href="{{ route('siswa.ruang-diskusi.index') }}"
            class="flex items-center gap-2 p-3 rounded-lg transition {{ Route::is('guru.forum-diskusi') ? 'bg-white text-blue-700 font-semibold ring-2 ring-blue-400' : 'hover:bg-blue-700 hover:text-white' }}">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c4.418 0 8-1.79 8-4V5a2 2 0 00-2-2h-2.586a1 1 0 01-.707-.293l-1.414-1.414A2 2 0 0011.586 1H8a2 2 0 00-2 2v1" />

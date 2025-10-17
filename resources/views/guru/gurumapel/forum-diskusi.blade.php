@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                                 <hr class="my-1">
-                                <a href="{{ route('siswa.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kembali</a>
+                                <a href="{{ route('guru.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kembali</a>
                             </div>
                         </div>
                     </div>

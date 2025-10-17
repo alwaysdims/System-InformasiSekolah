@@ -38,7 +38,13 @@
                         </div>
                         <hr class="border-gray-200">
                         <a href="#" class="block px-4 py-2 hover:bg-blue-50 text-center">Edit Profil</a>
-                        <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-blue-50 text-center text-red-500">Logout</a>
+                        <form action="{{ route('logout') }}" method="POST" class="text-center">
+                            @csrf
+                            <button type="submit" class="block w-full px-4 py-2 hover:bg-blue-50 text-red-500">
+                                Logout
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             </div>
