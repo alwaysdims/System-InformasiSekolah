@@ -16,9 +16,9 @@ class TugasController extends Controller
 {
     public function index()
     {
-        if (!Auth::check() || !Auth::user()->guru || Auth::user()->guru->guruMapels->isEmpty()) {
-            return redirect()->back()->with('error', 'Akun Anda tidak terkait dengan data Guru Mapel.');
-        }
+        // if (!Auth::check() || !Auth::user()->guru || Auth::user()->guru->guruMapels->isEmpty()) {
+        //     return redirect()->back()->with('error', 'Akun Anda tidak terkait dengan data Guru Mapel.');
+        // }
 
         $guruMapels = Auth::user()->guru->guruMapels()->with('mapel')->get();
         $kelas = Kelas::all();
@@ -31,9 +31,9 @@ class TugasController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check() || !Auth::user()->guru || Auth::user()->guru->guruMapels->isEmpty()) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guru || Auth::user()->guru->guruMapels->isEmpty()) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -49,9 +49,9 @@ class TugasController extends Controller
         }
 
         // Cek ownership
-        if (!Auth::user()->guru->guruMapels->contains($request->guru_mapel_id)) {
-            return back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::user()->guru->guruMapels->contains($request->guru_mapel_id)) {
+        //     return back()->with('error', 'Akses ditolak.');
+        // }
 
         Tugas::create($request->only([
             'judul', 'guru_mapel_id', 'tipe', 'deadline', 'bobot_pg', 'bobot_esai'
@@ -62,9 +62,9 @@ class TugasController extends Controller
 
     public function update(Request $request, Tugas $tugas)
     {
-        if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -79,9 +79,9 @@ class TugasController extends Controller
             return back()->withErrors(['bobot' => 'Total bobot harus 100%!'])->withInput();
         }
 
-        if (!Auth::user()->guru->guruMapels->contains($request->guru_mapel_id)) {
-            return back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::user()->guru->guruMapels->contains($request->guru_mapel_id)) {
+        //     return back()->with('error', 'Akses ditolak.');
+        // }
 
         $tugas->update($request->only([
             'judul', 'guru_mapel_id', 'tipe', 'durasi', 'bobot_pg', 'bobot_esai'
@@ -92,9 +92,9 @@ class TugasController extends Controller
 
     public function destroy(Tugas $tugas)
     {
-        if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         $tugas->delete();
 
@@ -103,9 +103,9 @@ class TugasController extends Controller
 
     public function publish(Request $request, Tugas $tugas)
     {
-        if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         $request->validate([
             'kelas_ids' => 'required|array|min:1',
@@ -126,9 +126,9 @@ class TugasController extends Controller
         // Di TugasController.php - GANTI method hasil()
     public function hasil(Tugas $tugas)
     {
-        if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
-            abort(403);
-        }
+        // if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
+        //     abort(403);
+        // }
 
         // Ambil distinct siswa_id DULU
         $siswaIds = TugasJawaban::where('tugas_id', $tugas->id)

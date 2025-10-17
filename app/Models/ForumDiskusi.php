@@ -21,7 +21,7 @@ class ForumDiskusi extends Model
 
     public function guruMapel()
     {
-        return $this->belongsTo(Guru_mapel::class);
+        return $this->belongsTo(Guru_Mapel::class);
     }
 
     public function creator()

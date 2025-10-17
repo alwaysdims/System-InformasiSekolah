@@ -29,7 +29,7 @@ class Tugas extends Model
     public function guru() {
         return $this->hasOneThrough(
             Guru::class,
-            Guru_mapel::class,
+            Guru_Mapel::class,
             'id',
             'id',
             'guru_mapel_id',

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 // use App\Models\User;
-use App\Models\Guru_mapel;
+use App\Models\Guru_Mapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

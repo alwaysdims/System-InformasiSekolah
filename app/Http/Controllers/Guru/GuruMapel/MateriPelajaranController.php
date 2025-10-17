@@ -17,9 +17,9 @@ class MateriPelajaranController extends Controller
     public function index()
     {
         // Pastikan user terautentikasi
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
-        }
+        // if (!Auth::check()) {
+        //     return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        // }
 
         $user = Auth::user();
 
@@ -40,9 +40,9 @@ class MateriPelajaranController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::check() || !Auth::user()->guruMapel) {
-            return redirect()->back()->with('error', 'Akses ditolak. Pastikan Anda login dan terkait dengan Guru Mapel.');
-        }
+        // if (!Auth::check() || !Auth::user()->guruMapel) {
+        //     return redirect()->back()->with('error', 'Akses ditolak. Pastikan Anda login dan terkait dengan Guru Mapel.');
+        // }
 
         $request->validate([
             'mapel' => 'required|string|max:255',
@@ -71,9 +71,9 @@ class MateriPelajaranController extends Controller
      */
     public function update(Request $request, Materi $materi)
     {
-        if (!Auth::check() || !Auth::user()->guruMapel || $materi->guru_mapel_id !== Auth::user()->guruMapel->id) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guruMapel || $materi->guru_mapel_id !== Auth::user()->guruMapel->id) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         $request->validate([
             'mapel' => 'required|string|max:255',
@@ -101,9 +101,9 @@ class MateriPelajaranController extends Controller
      */
     public function destroy(Materi $materi)
     {
-        if (!Auth::check() || !Auth::user()->guruMapel || $materi->guru_mapel_id !== Auth::user()->guruMapel->id) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guruMapel || $materi->guru_mapel_id !== Auth::user()->guruMapel->id) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         Storage::disk('public')->delete($materi->file_path);
         $materi->delete();
@@ -116,9 +116,9 @@ class MateriPelajaranController extends Controller
      */
     public function publish(Request $request, Materi $materi)
     {
-        if (!Auth::check() || !Auth::user()->guruMapel || $materi->guru_mapel_id !== Auth::user()->guruMapel->id) {
-            return redirect()->back()->with('error', 'Akses ditolak.');
-        }
+        // if (!Auth::check() || !Auth::user()->guruMapel || $materi->guru_mapel_id !== Auth::user()->guruMapel->id) {
+        //     return redirect()->back()->with('error', 'Akses ditolak.');
+        // }
 
         $request->validate([
             'kelas_id' => 'required|exists:kelas,id',

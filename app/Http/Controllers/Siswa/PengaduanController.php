@@ -18,28 +18,39 @@ class PengaduanController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
+        // Pastikan user punya relasi siswa
+        if (!$user || !$user->siswa) {
+            return redirect()->route('login')->with('error', 'Akun Anda tidak terdaftar sebagai siswa.');
+        }
+
         $query = Pengaduan::with(['gambar', 'chat.user'])
-            ->where('siswa_id', Auth::user()->siswa->id)
+            ->where('siswa_id', $user->siswa->id)
             ->orderBy('dibuat_pada', 'desc');
 
-        // Filter pencarian
-        if ($request->has('search') && $request->search) {
+        // 🔍 Filter pencarian
+        if ($request->filled('search')) {
             $query->where('judul', 'like', '%' . $request->search . '%');
         }
 
-        // Filter status
-        if ($request->has('status') && $request->status) {
+        // 🧩 Filter status
+        if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // Filter tanggal
-        if ($request->has('date') && $request->date) {
-            if ($request->date === 'today') {
-                $query->whereDate('dibuat_pada', today());
-            } elseif ($request->date === 'week') {
-                $query->whereBetween('dibuat_pada', [now()->startOfWeek(), now()->endOfWeek()]);
-            } elseif ($request->date === 'month') {
-                $query->whereBetween('dibuat_pada', [now()->startOfMonth(), now()->endOfMonth()]);
+        // 🗓️ Filter tanggal
+        if ($request->filled('date')) {
+            switch ($request->date) {
+                case 'today':
+                    $query->whereDate('dibuat_pada', today());
+                    break;
+                case 'week':
+                    $query->whereBetween('dibuat_pada', [now()->startOfWeek(), now()->endOfWeek()]);
+                    break;
+                case 'month':
+                    $query->whereBetween('dibuat_pada', [now()->startOfMonth(), now()->endOfMonth()]);
+                    break;
             }
         }
 

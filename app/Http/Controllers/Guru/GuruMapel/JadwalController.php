@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\guru\gurumapel;
+namespace App\Http\Controllers\Guru\GuruMapel;
 
 use App\Models\Guru_Mapel;
 use Illuminate\Http\Request;

@@ -19,6 +19,6 @@ class Jurusan extends Model
 
     public function guruMapel()
     {
-        return $this->hasMany(Guru_mapel::class);
+        return $this->hasMany(Guru_Mapel::class);
     }
 }
