@@ -3,16 +3,49 @@
 namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pengaduan;
+use App\Models\PengaduanGambar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PengaduanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('siswa.pengaduan');
+        $query = Pengaduan::with(['gambar', 'chat.user'])
+            ->where('siswa_id', Auth::user()->siswa->id)
+            ->orderBy('dibuat_pada', 'desc');
+
+        // Filter pencarian
+        if ($request->has('search') && $request->search) {
+            $query->where('judul', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter status
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter tanggal
+        if ($request->has('date') && $request->date) {
+            if ($request->date === 'today') {
+                $query->whereDate('dibuat_pada', today());
+            } elseif ($request->date === 'week') {
+                $query->whereBetween('dibuat_pada', [now()->startOfWeek(), now()->endOfWeek()]);
+            } elseif ($request->date === 'month') {
+                $query->whereBetween('dibuat_pada', [now()->startOfMonth(), now()->endOfMonth()]);
+            }
+        }
+
+        $pengaduan = $query->paginate(10);
+
+        return view('siswa.pengaduan', compact('pengaduan'));
     }
 
     /**
@@ -20,7 +53,7 @@ class PengaduanController extends Controller
      */
     public function create()
     {
-        //
+        return view('siswa.pengaduan.create');
     }
 
     /**
@@ -28,7 +61,45 @@ class PengaduanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'isi' => 'required|string',
+            'gambar.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maks 2MB per gambar
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // Buat pengaduan baru
+            $pengaduan = Pengaduan::create([
+                'siswa_id' => Auth::user()->siswa->id,
+                'judul' => $request->judul,
+                'isi' => $request->isi,
+                'status' => 'Menunggu',
+                'dibuat_pada' => now(),
+            ]);
+
+            // Simpan gambar jika ada
+            if ($request->hasFile('gambar')) {
+                foreach ($request->file('gambar') as $file) {
+                    $path = $file->store('pengaduan_gambar', 'public');
+                    PengaduanGambar::create([
+                        'pengaduan_id' => $pengaduan->id,
+                        'file_path' => $path,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('siswa.pengaduan.index')->with('success', 'Pengaduan berhasil dibuat.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Gagal menyimpan pengaduan: " . $e->getMessage(), [
+                'exception' => $e,
+                'user_id' => Auth::id(),
+                'request_data' => $request->except('_token', 'gambar'),
+            ]);
+            return redirect()->route('siswa.pengaduan.index')->with('error', 'Gagal menyimpan pengaduan: ' . $e->getMessage());
+        }
     }
 
     /**
