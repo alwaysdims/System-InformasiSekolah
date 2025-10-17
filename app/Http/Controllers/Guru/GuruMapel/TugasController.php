@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Guru\GuruMapel;
 
-use App\Http\Controllers\Controller;
-use App\Models\Tugas;
 use App\Models\Kelas;
+use App\Models\Tugas;
 use App\Models\Guru_Mapel;
+use App\Models\TugasJawaban;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -120,14 +122,65 @@ class TugasController extends Controller
 
         return redirect()->route('guru.tugas.index')->with('success', 'Tugas berhasil diterbitkan!');
     }
-
+// Di TugasController.php
+        // Di TugasController.php - GANTI method hasil()
     public function hasil(Tugas $tugas)
     {
         if (!Auth::check() || !Auth::user()->guru || !$tugas->guruMapel || !Auth::user()->guru->guruMapels->contains($tugas->guru_mapel_id)) {
             abort(403);
         }
 
-        // TODO: Load jawaban, soal, etc.
-        return view('guru.gurumapel.tugas.hasil', compact('tugas')); // Buat view hasil nanti
+        // Ambil distinct siswa_id DULU
+        $siswaIds = TugasJawaban::where('tugas_id', $tugas->id)
+            ->distinct()
+            ->pluck('siswa_id');
+
+        // MAP LANGSUNG
+        $jawabanSiswa = collect();
+        foreach ($siswaIds as $siswaId) {
+            $siswa = \App\Models\Siswa::with('kelas')->find($siswaId);
+            if (!$siswa) continue;
+
+            $kelas = $siswa->kelas->first();
+            $namaKelas = $kelas ? $kelas->nama_kelas : '-';
+
+            $jawabanPg = TugasJawaban::where('siswa_id', $siswaId)
+                ->whereHas('soal', fn($q) => $q->where('tipe', 'pilga'))
+                ->sum('nilai');
+            $jawabanEssay = TugasJawaban::where('siswa_id', $siswaId)
+                ->whereHas('soal', fn($q) => $q->where('tipe', 'essay'))
+                ->sum('nilai');
+            $totalNilai = TugasJawaban::where('siswa_id', $siswaId)
+                ->where('tugas_id', $tugas->id)
+                ->sum('nilai');
+
+            $jawabanSiswa->push([
+                'siswa' => $siswa,
+                'nisn' => $siswa->nisn ?? $siswa->nis,
+                'nama' => $siswa->nama,
+                'kelas' => $namaKelas,
+                'nilai_pg' => $jawabanPg,
+                'nilai_essay' => $jawabanEssay,
+                'total' => $totalNilai,
+                'status' => $totalNilai >= 70 ? 'Lulus' : 'Remidi'
+            ]);
+        }
+
+        $jawabanSiswa = $jawabanSiswa->sortByDesc('total');
+
+        return view('guru.gurumapel.hasil', compact('tugas', 'jawabanSiswa'));
+    }
+
+    // Di TugasController.php
+    public function detailJawaban(Tugas $tugas, $siswaId)
+    {
+        $jawaban = TugasJawaban::with(['siswa', 'soal'])
+            ->where('tugas_id', $tugas->id)
+            ->where('siswa_id', $siswaId)
+            ->get();
+
+        $siswa = $jawaban->first()->siswa;
+
+        return view('guru.gurumapel.tugas.detail-jawaban', compact('tugas', 'jawaban', 'siswa'));
     }
 }

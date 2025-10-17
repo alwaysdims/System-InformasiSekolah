@@ -132,6 +132,7 @@ Route::prefix('guru')->group(function () {
     Route::resource('tugas', \App\Http\Controllers\Guru\GuruMapel\TugasController::class)->names('guru.tugas');
     Route::post('tugas/{tugas}/publish', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'publish'])->name('guru.tugas.publish');
     Route::get('tugas/{tugas}/hasil', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'hasil'])->name('guru.tugas.hasil');
+    Route::get('tugas/{tugas}/jawaban/{siswa}', [\App\Http\Controllers\Guru\GuruMapel\TugasController::class, 'detailJawaban'])->name('guru.tugas.detail-jawaban');
 
     Route::get('detail-soal/{id}', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'index'])->name('guru.detail.tugas');
     Route::get('detail-soal/{id}/esay', [\App\Http\Controllers\Guru\GuruMapel\BuatSoalController::class, 'esay'])->name('guru.esay.tugas');

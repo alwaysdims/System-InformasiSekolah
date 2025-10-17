@@ -39,6 +39,11 @@ class Siswa extends Model
     //     return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id');
     // }
 
+    public function tugasJawaban()
+    {
+        return $this->hasMany(TugasJawaban::class);
+    }
+
     public function kelas()
     {
         return $this->belongsToMany(Kelas::class, 'siswa_kelas', 'siswa_id', 'kelas_id')
