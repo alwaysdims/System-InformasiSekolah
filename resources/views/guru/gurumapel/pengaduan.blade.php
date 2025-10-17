@@ -9,7 +9,17 @@
         Pengaduan
     </h1>
 
-    <!-- Filter Bar -->
+    @if (session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline">{{ session('success') }}</span>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    @endif
+
     <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0 mb-6 bg-white rounded-xl shadow-lg p-4">
         <div class="relative flex items-center w-full sm:w-64">
             <svg class="w-5 h-5 text-gray-400 absolute left-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -20,10 +30,9 @@
         </div>
         <select id="statusFilter" class="w-full sm:w-48 px-3 py-2 border rounded-lg bg-white text-gray-700 focus:ring-blue-500 focus:border-blue-500">
             <option value="" {{ request('status') == '' ? 'selected' : '' }}>Semua Status</option>
-            <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
-            <option value="Proses" {{ request('status') == 'Proses' ? 'selected' : '' }}>Proses</option>
+            <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+            <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>Diproses</option>
             <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-            <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
         </select>
         <select id="dateFilter" class="w-full sm:w-48 px-3 py-2 border rounded-lg bg-white text-gray-700 focus:ring-blue-500 focus:border-blue-500">
             <option value="" {{ request('date') == '' ? 'selected' : '' }}>Semua Tanggal</option>
@@ -39,7 +48,6 @@
         </a>
     </div>
 
-    <!-- Table -->
     <div class="bg-white shadow-lg rounded-xl overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left">
@@ -63,7 +71,7 @@
                             data-status="{{ $item->status }}"
                             data-img="{{ $item->gambar->first() ? asset('storage/' . $item->gambar->first()->file_path) : asset('images/placeholder.jpg') }}"
                             data-reason="{{ $item->alasan ?? '' }}"
-                            data-chats="{{ json_encode($item->chat->map(fn($chat) => ['user' => $chat->user->name, 'pesan' => $chat->pesan, 'created_at' => $chat->created_at->format('d M Y H:i')])) }}">
+                            data-chats="{{ json_encode($item->chat->map(fn($chat) => ['user' => $chat->user->name, 'pesan' => $chat->pesan, 'dibuat_pada' => $chat->dibuat_pada ? \Carbon\Carbon::parse($chat->dibuat_pada)->format('d M Y H:i') : 'Tanggal tidak tersedia'])) }}">
                             <td class="px-6 py-4">{{ $index + 1 + ($pengaduan->currentPage() - 1) * $pengaduan->perPage() }}</td>
                             <td class="px-6 py-4">{{ $item->judul }}</td>
                             <td class="px-6 py-4 flex items-center space-x-2">
@@ -75,10 +83,9 @@
                             <td class="px-6 py-4">
                                 @php
                                     $statusClasses = [
-                                        'Pending' => 'bg-amber-100 text-amber-500',
-                                        'Proses' => 'bg-blue-100 text-blue-700',
+                                        'Menunggu' => 'bg-amber-100 text-amber-500',
+                                        'Diproses' => 'bg-blue-100 text-blue-700',
                                         'Selesai' => 'bg-green-100 text-green-700',
-                                        'Ditolak' => 'bg-red-100 text-red-700',
                                     ];
                                     $class = $statusClasses[$item->status] ?? 'bg-gray-100 text-gray-700';
                                 @endphp
@@ -86,7 +93,7 @@
                                     {{ $item->status }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4">{{ $item->created_at->translatedFormat('d M Y H:i') }}</td>
+                            <td class="px-6 py-4">{{ $item->dibuat_pada->translatedFormat('d M Y H:i') }}</td>
                             <td class="px-6 py-4">
                                 <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full">
                                     {{ $item->siswa->jurusan->nama ?? 'Umum' }}
@@ -114,7 +121,6 @@
         </div>
     </div>
 
-    <!-- Modal Dinamis -->
     <div id="modalDetail" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden overflow-y-auto">
         <div class="bg-white rounded-xl w-full max-w-2xl mx-4 my-6 p-6 relative max-h-[90vh] overflow-y-auto">
             <h2 class="text-xl font-bold text-blue-900 mb-4 text-center" id="modalTitle"></h2>
@@ -129,24 +135,32 @@
                 <label class="block mb-1 font-medium text-gray-700">Riwayat Chat</label>
                 <div id="chatHistory" class="border border-gray-200 rounded-lg p-3 max-h-40 overflow-y-auto bg-gray-50"></div>
             </div>
-            <form id="responseForm" action="" method="POST">
+            <form id="responseForm" action="" method="POST" data-old-id="">
                 @csrf
                 <div class="mb-4">
                     <label class="block mb-1 font-medium text-gray-700">Balasan</label>
-                    <textarea name="pesan" rows="3" required class="w-full border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-2 px-3"></textarea>
+                    <textarea name="pesan" rows="3" required class="w-full border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-2 px-3 @error('pesan') border-red-500 @enderror">{{ old('pesan') }}</textarea>
+                    @error('pesan')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="mb-4">
                     <label class="block mb-1 font-medium text-gray-700">Ubah Status</label>
-                    <select name="status" class="w-full border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-2 px-3">
-                        <option value="Pending">Pending</option>
-                        <option value="Proses">Proses</option>
+                    <select name="status" id="statusSelect" class="w-full border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-2 px-3 @error('status') border-red-500 @enderror">
+                        <option value="Menunggu">Menunggu</option>
+                        <option value="Diproses">Diproses</option>
                         <option value="Selesai">Selesai</option>
-                        <option value="Ditolak">Ditolak</option>
                     </select>
+                    @error('status')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div id="reasonSection" class="mb-4 hidden">
-                    <label class="block mb-1 font-medium text-gray-700">Alasan (untuk Selesai/Ditolak)</label>
-                    <input type="text" name="alasan" class="w-full border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-2 px-3" />
+                    <label class="block mb-1 font-medium text-gray-700">Alasan (untuk Selesai)</label>
+                    <input type="text" name="alasan" class="w-full border-gray-200 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm py-2 px-3 @error('alasan') border-red-500 @enderror" value="{{ old('alasan') }}" />
+                    @error('alasan')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" onclick="closeModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">Kembali</button>
@@ -158,6 +172,8 @@
 </div>
 
 <script>
+    let lastOpenedPengaduanId = null;
+
     function openModal(button) {
         const row = button.closest('tr');
         const id = row.dataset.id;
@@ -168,36 +184,58 @@
         const reason = row.dataset.reason;
         const chats = JSON.parse(row.dataset.chats || '[]');
 
+        lastOpenedPengaduanId = id;
+
         document.getElementById('modalTitle').textContent = title;
         document.getElementById('modalDesc').value = desc;
         document.getElementById('modalImg').src = img;
 
         const chatHistory = document.getElementById('chatHistory');
-        chatHistory.innerHTML = chats.length ? chats.map(chat => `
-            <div class="mb-2 p-2 bg-white rounded-lg shadow-sm">
-                <p class="text-sm font-medium text-gray-700">${chat.user}</p>
-                <p class="text-sm text-gray-600">${chat.pesan}</p>
-                <p class="text-xs text-gray-400">${chat.created_at}</p>
-            </div>
-        `).join('') : '<p class="text-sm text-gray-500">Belum ada balasan</p>';
+        chatHistory.innerHTML = chats.length ? chats.map(chat => {
+            const isUser = chat.user === '{{ Auth::user()->name }}';
+            const alignClass = isUser ? 'text-right' : 'text-left';
+            const bgClass = isUser ? 'bg-blue-50 border-blue-200' : 'bg-white border-gray-200';
+            const name = isUser ? 'Anda' : chat.user;
+            const timestamp = chat.dibuat_pada || 'Tanggal tidak tersedia';
 
-        const statusSelect = document.querySelector('#responseForm select[name="status"]');
-        statusSelect.value = status;
+            return `
+                <div class="mb-2 p-2 ${bgClass} rounded-lg shadow-sm border ${alignClass}">
+                    <p class="text-xs text-gray-400 mb-1">${timestamp} <span class="font-bold text-gray-700">${name}</span></p>
+                    <p class="text-sm text-gray-600">${chat.pesan}</p>
+                </div>
+            `;
+        }).join('') : '<p class="text-sm text-gray-500">Belum ada balasan</p>';
+
+        const form = document.getElementById('responseForm');
+        const statusSelect = form.querySelector('select[name="status"]');
         const reasonSection = document.getElementById('reasonSection');
-        reasonSection.classList.toggle('hidden', !['Selesai', 'Ditolak'].includes(status));
-        reasonSection.querySelector('input[name="alasan"]').value = reason || '';
+        const reasonInput = form.querySelector('input[name="alasan"]');
+        
+        const hasErrors = {{ $errors->any() ? 'true' : 'false' }};
+        const oldId = form.dataset.oldId;
+        
+        if (hasErrors && oldId === id) {
+            statusSelect.value = '{{ old('status', '') }}';
+            reasonInput.value = '{{ old('alasan', '') }}';
+        } else {
+            statusSelect.value = status;
+            reasonInput.value = reason || '';
+        }
+        
+        reasonSection.classList.toggle('hidden', statusSelect.value !== 'Selesai');
 
-        document.getElementById('responseForm').action = `/guru/pengaduan/${id}/response`;
+        form.action = `{{ url('guru/pengaduan') }}/${id}/response`;
         document.getElementById('modalDetail').classList.remove('hidden');
     }
 
     function closeModal() {
         document.getElementById('modalDetail').classList.add('hidden');
+        lastOpenedPengaduanId = null;
     }
 
-    document.querySelector('#responseForm select[name="status"]').addEventListener('change', function () {
+    document.getElementById('statusSelect').addEventListener('change', function () {
         const reasonSection = document.getElementById('reasonSection');
-        reasonSection.classList.toggle('hidden', !['Selesai', 'Ditolak'].includes(this.value));
+        reasonSection.classList.toggle('hidden', this.value !== 'Selesai');
     });
 
     document.getElementById('searchInput').addEventListener('input', function () {
@@ -217,5 +255,27 @@
         url.searchParams.set('date', this.value);
         window.location = url;
     });
+
+    @if ($errors->any())
+        const urlSegments = window.location.pathname.split('/');
+        const responseIndex = urlSegments.indexOf('response');
+        let failedId = null;
+        if (responseIndex > 0) {
+            failedId = urlSegments[responseIndex - 1];
+        }
+
+        if (failedId) {
+            document.getElementById('responseForm').dataset.oldId = failedId;
+
+            const row = document.querySelector(`tr[data-id="${failedId}"]`);
+            if (row) {
+                const button = row.querySelector('button[onclick="openModal(this)"]');
+                if (button) {
+                    openModal(button);
+                    document.getElementById('modalDetail').scrollTop = 0;
+                }
+            }
+        }
+    @endif
 </script>
 @endsection

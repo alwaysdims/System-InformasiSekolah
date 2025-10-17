@@ -10,6 +10,14 @@ class Pengaduan extends Model
     
     protected $fillable = ['siswa_id', 'judul', 'isi', 'status'];
 
+    public $timestamps = false; 
+
+    protected $dates = ['dibuat_pada'];
+
+    protected $casts = [
+        'dibuat_pada' => 'datetime',
+    ];
+
     public function siswa()
     {
         return $this->belongsTo(Siswa::class);

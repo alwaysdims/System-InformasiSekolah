@@ -11,7 +11,7 @@ class GuruSeeder extends Seeder
         $data = [];
         for ($i = 1; $i <= 15; $i++) {
             $data[] = [
-                'user_id' => 3 + $i,  // Mulai dari user guru ID 4+
+                'user_id' => 3 + $i,
                 'nip' => 'NIP' . $i,
                 'nama' => 'Guru ' . $i,
                 'jenis_kelamin' => 'Laki-laki',

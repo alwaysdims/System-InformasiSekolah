@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,14 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Urutannya penting karena ada relasi antar tabel
         $this->call([
             JurusanSeeder::class,
             MapelSeeder::class,
             UserSeeder::class,
             AdminSeeder::class,
             GuruSeeder::class,
-            SiswaSeeder::class,
+            SiswaSeeder::class, // Siswa harus ada sebelum Pengaduan
             WaliMuridSeeder::class,
             KelasSeeder::class,
             GuruMapelSeeder::class,
@@ -38,8 +36,6 @@ class DatabaseSeeder extends Seeder
             ForumKomentarSeeder::class,
             PengumumanSeeder::class,
             PengaduanSeeder::class,
-            PengaduanGambarSeeder::class,
-            PengaduanChatSeeder::class,
             PelanggaranSiswaSeeder::class,
             PrestasiSiswaSeeder::class,
             KehadiranSiswaSeeder::class,

@@ -46,7 +46,6 @@ class UserSeeder extends Seeder
                 'role' => 'wali_murid',
             ];
         }
-        // Tambah hingga total 15 user dengan mix role
         for ($i = 16; $i <= 20; $i++) {  // Tambahan siswa/guru
             $data[] = [
                 'username' => 'user' . $i,
