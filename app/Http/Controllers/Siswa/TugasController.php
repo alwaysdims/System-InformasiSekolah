@@ -105,13 +105,13 @@ class TugasController extends Controller
         // Check if the student is registered in the task's class
         // Uncomment if needed
 
-        $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
-        ->where('siswa_id', Auth::user()->siswa->id)
-        ->exists();
+        // $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
+        // ->where('siswa_id', Auth::user()->siswa->id)
+        // ->exists();
 
-        if (!$terdaftar) {
-            return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
-        }
+        // if (!$terdaftar) {
+        //     return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
+        // }
 
         // Calculate the score per multiple-choice question
         $totalPgSoal = TugasSoal::where('tugas_id', $tugas->id)
@@ -179,13 +179,13 @@ class TugasController extends Controller
 
         // Check if the logged-in student is registered in one of the task's classes
 
-        $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
-        ->where('siswa_id', Auth::user()->siswa->id)
-        ->exists();
+        // $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
+        // ->where('siswa_id', Auth::user()->siswa->id)
+        // ->exists();
 
-        if (!$terdaftar) {
-        return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
-        }
+        // if (!$terdaftar) {
+        // return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
+        // }
 
         // Load the student's answers for multiple-choice questions
         $jawaban = $tugas->jawaban()->where('siswa_id', auth()->id())->get();
@@ -206,13 +206,13 @@ class TugasController extends Controller
 
         // Check if the logged-in student is registered in one of the task's classes
 
-        $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
-        ->where('siswa_id', Auth::user()->siswa->id)
-        ->exists();
+        // $terdaftar = SiswaKelas::whereIn('kelas_id', $tugas->kelas->pluck('id'))
+        // ->where('siswa_id', Auth::user()->siswa->id)
+        // ->exists();
 
-        if (!$terdaftar) {
-        return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
-        }
+        // if (!$terdaftar) {
+        // return redirect()->back()->with('error', 'Anda tidak terdaftar di kelas ini!');
+        // }
 
         // Load the student's answers for essay questions
         $jawaban = $tugas->jawaban()->where('siswa_id', auth()->id())->get();
