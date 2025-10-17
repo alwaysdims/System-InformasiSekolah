@@ -44,7 +44,6 @@
             Pengaduan
         </a>
 
-        <!-- 5. Ruang Diskusi -->
         <a href="{{ route('siswa.ruang-diskusi.index') }}"
             class="flex items-center gap-2 {{ Route::is('siswa.ruang-diskusi.*') ? 'bg-white text-blue-700 font-semibold ring-2 ring-blue-400' : 'hover:bg-blue-700 hover:text-white' }} p-3 rounded-lg transition">
              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,6 +51,7 @@
              </svg>
              Ruang Diskusi
          </a>
+
 
     </nav>
 </aside>
