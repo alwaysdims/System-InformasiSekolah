@@ -92,7 +92,7 @@
 
                 <!-- Submenu -->
                 <div id="aduanMenu" class="hidden ml-6 mt-2 flex flex-col gap-2">
-                    <a href="pengaduan.html"
+                    <a href="{{ route('guru.pengaduan') }}"
                         class="flex items-center gap-2 hover:bg-blue-700 hover:text-white p-2 rounded-lg transition">
                         📢 Pengaduan
                     </a>

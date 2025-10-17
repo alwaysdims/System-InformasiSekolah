@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DataSiswaController;
 use App\Http\Controllers\Admin\DataJurusanController;
 use App\Http\Controllers\WaliMurid\NilaiWaliController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\guru\gurumapel\PengaduanController;
 use App\Http\Controllers\Guru\KepalaSekolah\DashboardController;
 use App\Http\Controllers\WaliMurid\AgendaWaliController;
 use App\Http\Controllers\WaliMurid\PrestasiWaliController;
@@ -168,6 +169,9 @@ Route::prefix('guru')->group(function () {
     Route::post('detail-soal/{tugas}/pilga', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'storePilga'])->name('guru.pilga.store');
     Route::post('detail-soal/{tugas}/esay', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'storeEsay'])->name('guru.esay.store');
     Route::delete('soal/{soal}', [\App\Http\Controllers\guru\gurumapel\BuatSoalController::class, 'destroy'])->name('guru.soal.destroy');
+
+    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('guru.pengaduan');
+    Route::post('/pengaduan/{pengaduanId}/response', [PengaduanController::class, 'storeResponse'])->name('guru.pengaduan.response');
 });
 
 Route::get('/kepala/dashboard', [DashboardController::class, 'index'])->name('kepala.dashboard');
